@@ -86,7 +86,7 @@ function Register(props) {
     <Container style={{ height: "600px" }} fluid>
       <Row style={{ marginTop: "3rem" }} className="justify-content-md-center">
         <Col md="auto">
-          <Link to="/register">
+          <Link to="/">
             <h1 style={{ marginBottom: "3rem" }}>HighSchool Time</h1>
           </Link>
         </Col>

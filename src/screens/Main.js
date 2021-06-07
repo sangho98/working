@@ -183,7 +183,7 @@ const ControlledUserInfo = (props) => {
             onClick={() => {
               localStorage.removeItem("TOKEN");
               tokenData(null);
-              prop.history.push("/login");
+              prop.history.push("/");
             }}
           >
             로그아웃

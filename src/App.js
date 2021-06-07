@@ -25,7 +25,8 @@ function App() {
   useEffect(client);
 
   console.log("Enter App()");
-  console.log(tokenData());
+  console.log("Heroku Test");
+
   return (
     <Container fluid>
       <Router>

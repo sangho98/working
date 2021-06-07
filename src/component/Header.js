@@ -283,7 +283,7 @@ function Header(props) {
               }}
             ></FontAwesomeIcon>
 
-            <Link to="/login">
+            <Link to="/">
               <FontAwesomeIcon
                 icon={faPowerOff}
                 style={{ paddingRight: "13px" }}

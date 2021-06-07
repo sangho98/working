@@ -82,7 +82,7 @@ function Login(props) {
         className="justify-content-md-center "
         style={{ marginTop: "10rem" }}
       >
-        <Link to="/login">
+        <Link to="/">
           <h1 style={{ marginBottom: "3rem" }}>HighSchool Time</h1>
         </Link>
       </Row>
