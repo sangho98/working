@@ -223,7 +223,7 @@ export const GetDinnerList = async (props) => {
   const { setDinnerList } = props;
 
   await axios
-    .get("https://open.neis.go.kr/hub/mealServiceDietInfo", {
+    .get("/api", {
       KEY: "d42c851653dc4a008d9e831aaf3b8a31",
       Type: "json",
       ATPT_OFCDC_SC_CODE: "T10",
