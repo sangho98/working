@@ -218,3 +218,22 @@ export const GetFriendFollowList = async (props) => {
       console.log(err);
     });
 };
+
+export const GetDinnerList = async (props) => {
+  const { setDinnerList } = props;
+
+  await axios
+    .get("https://open.neis.go.kr/hub/mealServiceDietInfo", {
+      KEY: "d42c851653dc4a008d9e831aaf3b8a31",
+      Type: "json",
+      ATPT_OFCDC_SC_CODE: "T10",
+      SD_SCHUL_CODE: "9296071",
+    })
+    .then((res) => {
+      setDinnerList(res);
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

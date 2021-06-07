@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import Auth from "./screens/Auth";
@@ -14,12 +9,10 @@ import Footer from "./component/Footer";
 import Main from "./screens/Main";
 import Logout from "./screens/Logout";
 import UserInfo from "./screens/UserInfo";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { client, clientSet } from "./utils/ApiConfig";
-import { Container, Row, Col } from "react-bootstrap";
-import { tokenData } from "./Apollo";
-import { useReactiveVar } from "@apollo/client";
+import { client } from "./utils/ApiConfig";
+import { Container, Row } from "react-bootstrap";
 
 function App() {
   useEffect(client);

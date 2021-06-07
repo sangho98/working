@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../utils/URL";
 import {
@@ -16,6 +16,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { messageAlram, tokenData } from "../Apollo";
+import { GetDinnerList } from "../utils/ApiConfig";
 
 const Test2 = (props) => {
   return (
@@ -36,6 +37,10 @@ function Login(props) {
   const [click, setClick] = React.useState(false);
   const [LoginError, setLoginError] = React.useState(false);
   const target = useRef(null);
+  const [dinnerList, setDinnerList] = useState(null);
+  useEffect(() => {
+    GetDinnerList({ setDinnerList: setDinnerList });
+  }, []);
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);

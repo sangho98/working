@@ -5,6 +5,7 @@ import {
   faCommentDots,
   faPowerOff,
   faUserFriends,
+  faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -16,12 +17,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Table from "react-bootstrap/Table";
 import { GetMessage, SendMessage } from "../utils/ApiConfig";
-import { Col } from "react-bootstrap";
-import Logout from "../screens/Logout";
-import Alert from "react-bootstrap/Alert";
-import { Overlay, Tooltip, Toast } from "react-bootstrap";
 import { messageAlram, tokenData } from "../Apollo";
 import Friend from "./Friend";
+import Dinner from "./Dinner";
 
 const Headalign = styled.div`
   width: 100%;
@@ -95,12 +93,9 @@ const MessageDetail = (props) => {
   );
 };
 
-const Test = (props) => {
+const Messagelist = (props) => {
   const {
-    data,
     message,
-    setCount,
-    setModalShow,
     typeModal,
     setTypeModal,
     pageNum,
@@ -150,15 +145,19 @@ const MessageShow = (props) => {
       <Modal.Header closeButton>
         {typeModal === "1" || typeModal === "2" ? (
           <Modal.Title id="contained-modal-title-vcenter">쪽지함</Modal.Title>
-        ) : (
+        ) : typeModal === "3" ? (
           <Modal.Title id="contained-modal-title-vcenter">
             친구 목록
+          </Modal.Title>
+        ) : (
+          <Modal.Title id="contained-modal-title-vcenter">
+            오늘의 급식
           </Modal.Title>
         )}
       </Modal.Header>
       <Modal.Body>
         {typeModal === "1" || typeModal === "2" ? (
-          <Test
+          <Messagelist
             message={message}
             pageNum={pageNum}
             pageNumEnd={pageNumEnd}
@@ -168,6 +167,8 @@ const MessageShow = (props) => {
             typeModal={typeModal}
             data={data}
           />
+        ) : typeModal === "3" ? (
+          <Friend prop={prop} />
         ) : (
           <Friend prop={prop} />
         )}
@@ -261,6 +262,16 @@ function Header(props) {
           <Nav className="mr-auto"></Nav>
 
           <Nav>
+            <FontAwesomeIcon
+              icon={faUtensils}
+              style={{ paddingRight: "13px" }}
+              color="white"
+              size="2x"
+              onClick={() => {
+                setTypeModal("4");
+                setModalShow(true);
+              }}
+            ></FontAwesomeIcon>
             <FontAwesomeIcon
               icon={faUserFriends}
               style={{ paddingRight: "13px" }}
