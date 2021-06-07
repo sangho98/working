@@ -1,11 +1,11 @@
 const proxy = require("http-proxy-middleware");
 
-module.exports = function (app) {
+module.exports = (app) => {
   app.use(
-    "/api",
-    proxy({
-      target: "https://open.neis.go.kr/hub/mealServiceDietInfo",
+    proxy("/api", {
+      target: "https://open.neis.go.kr",
       changeOrigin: true,
+      pathRewrite: { "^/api": "" },
     })
   );
 };

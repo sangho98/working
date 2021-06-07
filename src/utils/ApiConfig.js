@@ -223,14 +223,36 @@ export const GetDinnerList = async (props) => {
   const { setDinnerList } = props;
 
   await axios
-    .get("/api", {
-      KEY: "d42c851653dc4a008d9e831aaf3b8a31",
-      Type: "json",
-      ATPT_OFCDC_SC_CODE: "T10",
-      SD_SCHUL_CODE: "9296071",
+    .get("/api/hub/mealServiceDietInfo", {
+      params: {
+        KEY: "d42c851653dc4a008d9e831aaf3b8a31",
+        Type: "json",
+        ATPT_OFCDC_SC_CODE: "T10",
+        SD_SCHUL_CODE: "9296071",
+        pIndex: "1",
+        pSize: "5",
+      },
     })
     .then((res) => {
       setDinnerList(res);
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const GetSchoolInfo = async (props) => {
+  await axios
+    .get("/api/hub/schoolInfo", {
+      params: {
+        KEY: "d42c851653dc4a008d9e831aaf3b8a31",
+        Type: "json",
+        pIndex: "1",
+        pSize: "100",
+      },
+    })
+    .then((res) => {
       console.log(res);
     })
     .catch((err) => {

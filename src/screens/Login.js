@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { messageAlram, tokenData } from "../Apollo";
-import { GetDinnerList } from "../utils/ApiConfig";
+import { GetDinnerList, GetSchoolInfo } from "../utils/ApiConfig";
 
 const Test2 = (props) => {
   return (
@@ -40,6 +40,7 @@ function Login(props) {
   const [dinnerList, setDinnerList] = useState(null);
   useEffect(() => {
     GetDinnerList({ setDinnerList: setDinnerList });
+    GetSchoolInfo();
   }, []);
 
   const onChangeEmail = (e) => {
