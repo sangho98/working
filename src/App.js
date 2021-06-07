@@ -24,9 +24,7 @@ import { useReactiveVar } from "@apollo/client";
 function App() {
   useEffect(client);
 
-  console.log("APP");
-  console.log("APP");
-  console.log("APP");
+  console.log("Enter App()");
   console.log(tokenData());
   return (
     <Container fluid>
