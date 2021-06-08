@@ -27,11 +27,6 @@ const MessageShow = (props) => {
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [show, setShow] = useState(true);
   const [messageId, setMessageId] = useState(null);
-  const [message, setMessage] = useState(null);
-
-  useEffect(() => {
-    GetMessage({ data: data, setMessage: setMessage });
-  });
 
   return (
     <Modal
@@ -56,14 +51,12 @@ const MessageShow = (props) => {
       <Modal.Body>
         {typeModal === "1" || typeModal === "2" ? (
           <Message
-            message={message}
             pageNum={pageNum}
             pageNumEnd={pageNumEnd}
             setTypeModal={setTypeModal}
             setMessageId={setMessageId}
             messageId={messageId}
             typeModal={typeModal}
-            data={data}
             prop={prop}
           />
         ) : typeModal === "3" ? (

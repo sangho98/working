@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { tokenData } from "../Apollo";
+import { GetMessage } from "../utils/ApiConfig";
 
 const ListMessage = (props) => {
   const { message, pageNum, pageNumEnd, setTypeModal, setMessageId } = props;
@@ -71,14 +72,20 @@ const MessageDetail = (props) => {
 
 function Message(props) {
   const {
-    message,
     typeModal,
     setTypeModal,
     pageNum,
     pageNumEnd,
     setMessageId,
     messageId,
+    prop,
   } = props;
+
+  const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    GetMessage({ data: tokenData(), setMessage: setMessage });
+  });
 
   if (message) {
     if (typeModal === "1") {
