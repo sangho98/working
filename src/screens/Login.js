@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 import { SERVER_URL } from "../utils/URL";
 import {
@@ -7,41 +7,18 @@ import {
   Row,
   Col,
   Container,
-  Alert,
   Tooltip,
-  OverlayTrigger,
-  Popover,
   Overlay,
-  Toast,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { messageAlram, tokenData } from "../Apollo";
-import { GetDinnerList, GetSchoolInfo } from "../utils/ApiConfig";
-
-const Test2 = (props) => {
-  return (
-    <Toast {...props}>
-      <Toast.Header>
-        <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
-        <strong className="mr-auto">Bootstrap</strong>
-        <small>11 mins ago</small>
-      </Toast.Header>
-      <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-    </Toast>
-  );
-};
 
 function Login(props) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [click, setClick] = React.useState(false);
+
   const [LoginError, setLoginError] = React.useState(false);
   const target = useRef(null);
-  const [dinnerList, setDinnerList] = useState(null);
-  useEffect(() => {
-    GetDinnerList({ setDinnerList: setDinnerList });
-    GetSchoolInfo();
-  }, []);
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);

@@ -38,7 +38,7 @@ const ListMessage = (props) => {
 };
 
 const MessageDetail = (props) => {
-  const { message, setTypeModal, messageId } = props;
+  const { message, messageId } = props;
   return (
     <Table bordered hover>
       <thead>
@@ -78,14 +78,13 @@ function Message(props) {
     pageNumEnd,
     setMessageId,
     messageId,
-    prop,
   } = props;
 
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
     GetMessage({ data: tokenData(), setMessage: setMessage });
-  });
+  }, []);
 
   if (message) {
     if (typeModal === "1") {

@@ -1,23 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 
-import Tab from "react-bootstrap/Tab";
-import Carousel from "react-bootstrap/Carousel";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import { LinkContainer } from "react-router-bootstrap";
+import {
+  Tab,
+  Row,
+  Col,
+  Nav,
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Container,
+  Button,
+  Image,
+  Jumbotron,
+  Table,
+  Alert,
+} from "react-bootstrap";
+
 import { GetArticle, GetUserInfo } from "../utils/ApiConfig";
-import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
-import Alert from "react-bootstrap/Alert";
-import { Jumbotron, Toast } from "react-bootstrap";
 import { tokenData } from "../Apollo";
 
 const ListArticle = (props) => {

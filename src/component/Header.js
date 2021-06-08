@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,8 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Button, Modal, FormControl, Form, Nav, Navbar } from "react-bootstrap";
-import { GetMessage, SendMessage } from "../utils/ApiConfig";
-import { messageAlram, tokenData } from "../Apollo";
+import { tokenData } from "../Apollo";
 import Friend from "./Friend";
 import Dinner from "./Dinner";
 import Message from "./Message";
@@ -22,10 +21,9 @@ const Headalign = styled.div`
 `;
 
 const MessageShow = (props) => {
-  const { data, setModalShow, typeModal, setTypeModal, prop } = props;
+  const { setModalShow, typeModal, setTypeModal, prop } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
-  const [show, setShow] = useState(true);
   const [messageId, setMessageId] = useState(null);
 
   return (

@@ -1,27 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Overlay,
-  Tooltip,
-  OverlayTrigger,
-} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { tokenData } from "../Apollo";
 import { GetUserInfo, PutUserInfo } from "../utils/ApiConfig";
 
 function UserInfo(props) {
-  const { data } = props;
   const [userData, setUserData] = useState(null);
   const [newNickname, setNewNickname] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
   const [prevPassword, setPrevPassword] = useState(null);
-
-  const [correctPassword, setCorrectPassword] = useState(true);
-
-  const target = useRef(null);
 
   useEffect(() => {
     GetUserInfo({
@@ -92,31 +78,9 @@ function UserInfo(props) {
                   type="password"
                   placeholder="현재 비밀번호"
                   onChange={onChangePrevPassword}
-                  ref={target}
                 />
               </Form.Group>
-              <Overlay
-                target={target.current}
-                show={correctPassword}
-                placement="top"
-              >
-                {(props) => (
-                  <Tooltip id="overlay-example" {...props}>
-                    이전 비밀번호와 일치하지 않습니다.
-                  </Tooltip>
-                )}
-              </Overlay>
-              <Overlay
-                target={target.current}
-                show={!correctPassword}
-                placement="top"
-              >
-                {(props) => (
-                  <Tooltip id="overlay-example" {...props}>
-                    이전 비밀번호와 일치합니다!
-                  </Tooltip>
-                )}
-              </Overlay>
+
               <Form.Group as={Col} controlId="formGridPassword">
                 <Form.Label>변경 비밀번호</Form.Label>
                 <Form.Control
@@ -152,29 +116,16 @@ function UserInfo(props) {
               </Form.Group>
             </Form.Row>
             <Form.Row as={Col}>
-              {!correctPassword && newNickname !== null ? (
-                <Button
-                  variant="primary"
-                  type="submit"
-                  onClick={(e) => {
-                    handleSubmit(e);
-                    window.location.href = "/";
-                  }}
-                >
-                  Submit
-                </Button>
-              ) : (
-                <Button
-                  disabled="true"
-                  variant="primary"
-                  type="submit"
-                  onClick={() => {
-                    handleSubmit();
-                  }}
-                >
-                  Submit
-                </Button>
-              )}
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={(e) => {
+                  handleSubmit(e);
+                  window.location.href = "/";
+                }}
+              >
+                Submit
+              </Button>
             </Form.Row>
           </Form>
         </Col>

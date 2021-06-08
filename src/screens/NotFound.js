@@ -1,4 +1,3 @@
-import { isLoggedInVar } from "../Apollo";
 import React from "react";
 
 function NotFound() {

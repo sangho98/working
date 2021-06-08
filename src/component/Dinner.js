@@ -15,19 +15,17 @@ function Dinner(props) {
     <Table>
       <thead>
         <tr>
-          <th>일</th>
           <th>월</th>
           <th>화</th>
           <th>수</th>
           <th>목</th>
           <th>금</th>
           <th>토</th>
+          <th>일</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>hi</td>
-        </tr>
+        <tr></tr>
       </tbody>
     </Table>
   );

@@ -30,7 +30,7 @@ export const GetMessage = (props) => {
 };
 
 export const SendMessage = (props) => {
-  const { data, setMessage, email } = props;
+  const { data, email } = props;
   axios
     .post(SERVER_URL + `/message/${email}`, data)
     .then((res) => {
@@ -42,10 +42,10 @@ export const SendMessage = (props) => {
 };
 
 export const GetArticle = async (props) => {
-  const { data, setArticle } = props;
+  const { setArticle } = props;
 
   await axios
-    .get(SERVER_URL + "/post/neople", {
+    .get(SERVER_URL + "/post/freeboard", {
       headers: {
         Authorization: tokenData(),
       },
@@ -61,7 +61,7 @@ export const GetArticle = async (props) => {
 };
 
 export const GetUserInfo = async (props) => {
-  const { data, setUserData } = props;
+  const { setUserData } = props;
 
   await axios
     .get(SERVER_URL + "/user", {
@@ -98,9 +98,7 @@ export const PutUserInfo = (props) => {
 };
 
 export const PostWriteArticle = (props) => {
-  const { data, articleData } = props;
-
-  const multiform = new FormData();
+  const { articleData } = props;
 
   axios.post(SERVER_URL + "/post/nexon", articleData).then(
     ((res) => {
@@ -184,7 +182,7 @@ export const PostRegister = (props) => {
 };
 
 export const GetFriendList = async (props) => {
-  const { data, setFriendList } = props;
+  const { setFriendList } = props;
 
   await axios
     .get(SERVER_URL + "/user/friends", {
