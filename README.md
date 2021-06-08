@@ -3,9 +3,15 @@
 ## 팀원 : 배서현, 박상호, 황선형
 
 Front-end 구성
+
 ### `/`
-### `**> /login` 
+
+### `**> /login`
+
 ### `**> /register`
+
 ### `**> /confirm-email`
+
 ### `**> /auth`
+
 ### `**> /expired`

@@ -9,131 +9,29 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Form from "react-bootstrap/Form";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Table from "react-bootstrap/Table";
+import { Button, Modal, FormControl, Form, Nav, Navbar } from "react-bootstrap";
 import { GetMessage, SendMessage } from "../utils/ApiConfig";
 import { messageAlram, tokenData } from "../Apollo";
 import Friend from "./Friend";
 import Dinner from "./Dinner";
+import Message from "./Message";
 
 const Headalign = styled.div`
   width: 100%;
   height: 60px;
 `;
 
-const ListMessage = (props) => {
-  const { message, pageNum, pageNumEnd, setTypeModal, setMessageId } = props;
-
-  return (
-    <Table bordered hover>
-      <thead>
-        <tr>
-          <th style={{ textAlign: "center" }}>번호</th>
-          <th style={{ width: "93%", textAlign: "center" }}>제목</th>
-        </tr>
-      </thead>
-      <tbody>
-        {message.slice(pageNum, pageNumEnd).map((m) => {
-          return (
-            <tr key={m.id}>
-              <td style={{ textAlign: "center" }}>{m.id}</td>
-
-              <td
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  setTypeModal("2");
-                  setMessageId(m.id);
-                }}
-              >
-                {m.title}
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </Table>
-  );
-};
-
-const MessageDetail = (props) => {
-  const { message, setTypeModal, messageId } = props;
-  return (
-    <Table bordered hover>
-      <thead>
-        {message.map((m) => {
-          if (m.id === messageId) {
-            return (
-              <tr>
-                <th style={{ width: "10%", textAlign: "center" }}>제목</th>
-                <td style={{ width: "90%", textAlign: "center" }}>{m.title}</td>
-              </tr>
-            );
-          }
-        })}
-      </thead>
-      <tbody>
-        {message.map((m) => {
-          if (m.id === messageId) {
-            return (
-              <tr key={m.id}>
-                <th style={{ textAlign: "center" }}>내용</th>
-
-                <td style={{ textAlign: "center" }}>{m.content}</td>
-              </tr>
-            );
-          }
-        })}
-      </tbody>
-    </Table>
-  );
-};
-
-const Messagelist = (props) => {
-  const {
-    message,
-    typeModal,
-    setTypeModal,
-    pageNum,
-    pageNumEnd,
-    setMessageId,
-    messageId,
-  } = props;
-
-  if (typeModal === "1") {
-    return (
-      <ListMessage
-        message={message}
-        pageNum={pageNum}
-        pageNumEnd={pageNumEnd}
-        setTypeModal={setTypeModal}
-        setMessageId={setMessageId}
-      />
-    );
-  } else if (typeModal === "2") {
-    return <MessageDetail message={message} messageId={messageId} />;
-  }
-};
-
 const MessageShow = (props) => {
-  const {
-    data,
-    message,
-    setCount,
-    setModalShow,
-    typeModal,
-    setTypeModal,
-    prop,
-  } = props;
+  const { data, setModalShow, typeModal, setTypeModal, prop } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [show, setShow] = useState(true);
   const [messageId, setMessageId] = useState(null);
-  const target = useRef(null);
+  const [message, setMessage] = useState(null);
+
+  useEffect(() => {
+    GetMessage({ data: data, setMessage: setMessage });
+  });
 
   return (
     <Modal
@@ -157,7 +55,7 @@ const MessageShow = (props) => {
       </Modal.Header>
       <Modal.Body>
         {typeModal === "1" || typeModal === "2" ? (
-          <Messagelist
+          <Message
             message={message}
             pageNum={pageNum}
             pageNumEnd={pageNumEnd}
@@ -166,11 +64,12 @@ const MessageShow = (props) => {
             messageId={messageId}
             typeModal={typeModal}
             data={data}
+            prop={prop}
           />
         ) : typeModal === "3" ? (
           <Friend prop={prop} />
         ) : (
-          <Friend prop={prop} />
+          <Dinner prop={prop} />
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -178,9 +77,7 @@ const MessageShow = (props) => {
           <Button
             onClick={() => {
               if (pageNum <= 0) {
-                setShow(!show);
               } else {
-                setShow(false);
                 setPageNum(pageNum - 5);
                 setPageNumEnd(pageNumEnd - 5);
               }
@@ -194,7 +91,6 @@ const MessageShow = (props) => {
             onClick={() => {
               setPageNum(pageNum + 5);
               setPageNumEnd(pageNumEnd + 5);
-              setShow(!show);
             }}
           >
             Next
@@ -204,7 +100,6 @@ const MessageShow = (props) => {
         <Button
           onClick={() => {
             setModalShow(false);
-            setCount(false);
           }}
         >
           Close
@@ -216,21 +111,9 @@ const MessageShow = (props) => {
 
 function Header(props) {
   const [modalShow, setModalShow] = React.useState(false);
-  const [message, setMessage] = useState(null);
-  const [count, setCount] = useState(false);
-  const [show, setShow] = useState(false);
   const [typeModal, setTypeModal] = useState(true);
-  const target = useRef(null);
-  const [successLogin, setSuccessLogin] = useState(false);
 
   const data = tokenData();
-
-  if (modalShow && !count) {
-    GetMessage({ data: data, setMessage: setMessage });
-    if (message) {
-      setCount(true);
-    }
-  }
 
   if (
     props.history.location.pathname === "/login" ||
@@ -241,19 +124,16 @@ function Header(props) {
     return (
       <Headalign>
         <clientSet></clientSet>
-        {modalShow && message ? (
-          <MessageShow
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-            data={data}
-            message={message}
-            typeModal={typeModal}
-            setCount={setCount}
-            setModalShow={setModalShow}
-            setTypeModal={setTypeModal}
-            prop={props}
-          ></MessageShow>
-        ) : null}
+
+        <MessageShow
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          data={data}
+          typeModal={typeModal}
+          setModalShow={setModalShow}
+          setTypeModal={setTypeModal}
+          prop={props}
+        ></MessageShow>
 
         <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>
           <Link to="/">
