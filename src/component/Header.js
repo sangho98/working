@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,13 +15,15 @@ import Friend from "./Friend";
 import Dinner from "./Dinner";
 import Message from "./Message";
 
+import { GetDinnerList } from "../utils/ApiConfig";
+
 const Headalign = styled.div`
   width: 100%;
   height: 60px;
 `;
 
 const MessageShow = (props) => {
-  const { setModalShow, typeModal, setTypeModal, prop } = props;
+  const { setModalShow, typeModal, setTypeModal, prop, dinnerList } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [messageId, setMessageId] = useState(null);
@@ -60,7 +62,7 @@ const MessageShow = (props) => {
         ) : typeModal === "3" ? (
           <Friend prop={prop} />
         ) : (
-          <Dinner prop={prop} />
+          <Dinner prop={prop} dinnerList={dinnerList} />
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -103,6 +105,11 @@ const MessageShow = (props) => {
 function Header(props) {
   const [modalShow, setModalShow] = React.useState(false);
   const [typeModal, setTypeModal] = useState(true);
+  const [dinnerList, setDinnerList] = useState(null);
+
+  useEffect(() => {
+    GetDinnerList({ data: tokenData(), setDinnerList: setDinnerList });
+  }, []);
 
   const data = tokenData();
 
@@ -124,6 +131,7 @@ function Header(props) {
           setModalShow={setModalShow}
           setTypeModal={setTypeModal}
           prop={props}
+          dinnerList={dinnerList}
         ></MessageShow>
 
         <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>

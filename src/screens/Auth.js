@@ -1,10 +1,11 @@
 import React from "react";
+import { Redirect } from "react-router";
 import { tokenData } from "../Apollo";
 
 function Auth(props) {
   tokenData(null);
   localStorage.clear();
-  return <div>인증 완료!</div>;
+  return <Redirect to="/login" />;
 }
 
 export default Auth;

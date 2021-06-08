@@ -257,3 +257,22 @@ export const GetSchoolInfo = async (props) => {
       console.log(err);
     });
 };
+
+export const GetConfirmEmail = async (props) => {
+  const { tokenURL, setSuccess } = props;
+
+  await axios
+    .get(SERVER_URL + "/confirm-email", {
+      params: {
+        token: tokenURL,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      setSuccess(true);
+    })
+    .catch((err) => {
+      console.log(err);
+      setSuccess(false);
+    });
+};

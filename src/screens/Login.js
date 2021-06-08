@@ -33,6 +33,7 @@ function Login(props) {
       email: email,
       password: password,
     };
+    console.log(data);
 
     axios
       .post(SERVER_URL + "/login", data)

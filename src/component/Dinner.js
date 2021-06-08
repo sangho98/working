@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
-import { tokenData } from "../Apollo";
-import { GetDinnerList } from "../utils/ApiConfig";
 
 function Dinner(props) {
-  const [dinnerList, setDinnerList] = useState(null);
-
-  useEffect(() => {
-    GetDinnerList({ data: tokenData(), setDinnerList: setDinnerList });
-  }, []);
+  const { dinnerList } = props;
 
   console.log(dinnerList);
   return (

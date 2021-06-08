@@ -3,13 +3,16 @@ import { Redirect } from "react-router";
 import { GetConfirmEmail } from "../utils/ApiConfig";
 
 function Confirm(props) {
+  const [success, setSuccess] = useState(false);
   const params = props.location.search.split("token=");
 
-  const tokenD = {
-    token: params.slice(1, 2),
-  };
+  GetConfirmEmail({ tokenURL: params[1], setSuccess: setSuccess });
 
-  return <Redirect to="/auth" />;
+  if (success) {
+    return <div>인증 진행중</div>;
+  } else {
+    return <div>인증 실패!</div>;
+  }
 }
 
 export default Confirm;
