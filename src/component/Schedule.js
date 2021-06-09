@@ -3,16 +3,6 @@ import { Table } from "react-bootstrap";
 import { udata } from "../Apollo";
 import { GetTimeList, GetUserInfo } from "../utils/ApiConfig";
 
-const test = ({ schedule }) => {
-  schedule.data.hisTimetable[1].row.map((m) => {
-    return (
-      <tr>
-        <td>{m.PERIO}</td>
-        <td>{m.ITRT_CNTNT}</td>
-      </tr>
-    );
-  });
-};
 function Schedule(props) {
   const [schedule, setschedule] = useState();
 
@@ -20,10 +10,10 @@ function Schedule(props) {
   let d = 0;
 
   useEffect(() => {
-    if (!schedule) GetTimeList({ setschedule: setschedule });
+    if (!schedule) {
+      GetTimeList({ setschedule: setschedule });
+    }
   }, [schedule]);
-
-  console.log(schedule);
 
   if (schedule) {
     let i = -1;
@@ -42,7 +32,7 @@ function Schedule(props) {
         </thead>
         <tbody>
           {schedule.data.hisTimetable[1].row.slice(0, 7).map((m) => {
-            console.log(i++);
+            i++;
             return (
               <tr>
                 <th>{schedule.data.hisTimetable[1].row[i].PERIO}</th>
@@ -58,7 +48,7 @@ function Schedule(props) {
       </Table>
     );
   } else {
-    return <div>Server Error!!</div>;
+    return <div>시간표 불러오는중..</div>;
   }
 }
 

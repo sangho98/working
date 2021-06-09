@@ -249,10 +249,12 @@ export const GetDinnerList = async (props) => {
       params: {
         KEY: "d42c851653dc4a008d9e831aaf3b8a31",
         Type: "json",
-        ATPT_OFCDC_SC_CODE: "T10",
-        SD_SCHUL_CODE: "9296071",
+        ATPT_OFCDC_SC_CODE: udata().educationCenter,
+        SD_SCHUL_CODE: udata().schoolnumber,
         pIndex: "1",
-        pSize: "5",
+        pSize: "1000",
+        MLSV_FROM_YMD: "20210607",
+        MLSV_TO_YMD: "20210611",
       },
     })
     .then((res) => {
@@ -265,7 +267,7 @@ export const GetDinnerList = async (props) => {
 };
 
 export const GetTimeList = (props) => {
-  const { setschedule, code } = props;
+  const { setschedule } = props;
   console.log("GET TIMELIST");
   axios
     .get("/api/hub/hisTimetable", {
