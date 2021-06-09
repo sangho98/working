@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { tokenData, udata } from "../Apollo";
-import { GetUserInfo, PutUserInfo } from "../utils/ApiConfig";
+import { PutUserInfo } from "../utils/ApiConfig";
 
 function UserInfo(props) {
   const [newNickname, setNewNickname] = useState(null);
@@ -90,24 +90,42 @@ function UserInfo(props) {
                   className="my-1 mr-2"
                   htmlFor="inlineFormCustomSelectPref"
                 >
-                  지역
+                  학교
                 </Form.Label>
                 <Form.Control
-                  as="select"
-                  className="my-1 mr-sm-2"
-                  id="inlineFormCustomSelectPref"
-                  custom
+                  plaintext
+                  readOnly
+                  defaultValue={`${udata().schoolname}`}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label
+                  className="my-1 mr-2"
+                  htmlFor="inlineFormCustomSelectPref"
                 >
-                  <option value="0">
-                    현재 지역 : {udata() && udata().region}
-                  </option>
-                  <option value="1">서울</option>
-                  <option value="2">인천</option>
-                  <option value="3">익산</option>
-                  <option value="3">정읍</option>
-                </Form.Control>
+                  학년
+                </Form.Label>
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={`${udata().grade}`}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label
+                  className="my-1 mr-2"
+                  htmlFor="inlineFormCustomSelectPref"
+                >
+                  반
+                </Form.Label>
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={`${udata().classnum}`}
+                />
               </Form.Group>
             </Form.Row>
+
             <Form.Row as={Col}>
               <Button
                 variant="primary"

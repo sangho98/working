@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { tokenData, udata } from "../Apollo";
+import Message from "../component/Message";
 import { SEM, SERVER_URL } from "./URL";
+import react from "react";
 
 export const client = axios.create({
   headers: {
@@ -12,22 +14,26 @@ export const client = axios.create({
 export const clientset = (axios.defaults.headers.common["Authorization"] =
   localStorage.getItem("TOKEN"));
 
-export const GetMessage = (props) => {
-  const { setMessage } = props;
-  axios
+export const GetMessage = async (props) => {
+  const { setmessage, setnullm } = props;
+
+  await axios
     .get(SERVER_URL + "/message/received", {
       headers: {
         Authorization: tokenData(),
       },
     })
-    .then(
-      (res) => {
-        setMessage(res.data);
-      },
-      (err) => {
-        console.log(err);
+    .then((res) => {
+      console.log(res);
+      if (res.data.length === 0) {
+        setnullm(false);
+      } else {
+        setmessage(res);
       }
-    );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const SendMessage = (props) => {
@@ -95,19 +101,6 @@ export const PutUserInfo = (props) => {
     .catch((err) => {
       console.log(err);
     });
-};
-
-export const PostWriteArticle = (props) => {
-  const { articleData } = props;
-
-  axios.post(SERVER_URL + "/post/nexon", articleData).then(
-    ((res) => {
-      //success
-    },
-    (err) => {
-      //faile
-    })
-  );
 };
 
 export const PostCheckEmail = (props) => {
@@ -215,7 +208,7 @@ export const GetFriendList = async (props) => {
       },
     })
     .then((res) => {
-      setFriendList(res);
+      setFriendList(res.data);
       console.log(res);
     })
     .catch((err) => {
@@ -233,7 +226,7 @@ export const GetFriendFollowList = async (props) => {
       },
     })
     .then((res) => {
-      setFriendFollowList(res);
+      setFriendFollowList(res.data);
       console.log(res);
     })
     .catch((err) => {

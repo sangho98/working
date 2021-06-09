@@ -17,13 +17,6 @@ import Dinner from "./Dinner";
 import Message from "./Message";
 import Schedule from "./Schedule";
 
-import {
-  GetDinnerList,
-  GetSchoolInfo,
-  GetTimeList,
-  GetUserInfo,
-} from "../utils/ApiConfig";
-
 const Headalign = styled.div`
   width: 100%;
   height: 60px;
@@ -114,8 +107,8 @@ const MessageShow = (props) => {
 };
 
 function Header(props) {
-  const [modalshow, setmodalshow] = React.useState(false);
-  const [typemodal, settypemodal] = useState(true);
+  const [modalshow, setmodalshow] = useState(false);
+  const [typemodal, settypemodal] = useState(null);
 
   const data = tokenData();
 

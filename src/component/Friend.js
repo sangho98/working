@@ -8,11 +8,12 @@ function Friend(props) {
   const [friendFollowList, setFriendFollowList] = useState(null);
 
   useEffect(() => {
-    GetFriendList({ data: tokenData(), setFriendList: setFriendList });
-    GetFriendFollowList({ setFriendFollowList: setFriendFollowList });
-  }, []);
+    if (!friendList || !friendFollowList) {
+      GetFriendList({ setFriendList: setFriendList });
+      GetFriendFollowList({ setFriendFollowList: setFriendFollowList });
+    }
+  }, [friendList, friendFollowList]);
 
-  console.log(friendList);
   return (
     <Tabs defaultActiveKey="list" transition={false} id="noanim-tab-example">
       <Tab eventKey="list" title="친구 목록">

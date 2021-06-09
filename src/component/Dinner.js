@@ -9,8 +9,6 @@ function Dinner(props) {
     if (!dinnerlist) GetDinnerList({ setdinnerlist: setdinnerlist });
   }, [dinnerlist]);
 
-  console.log(dinnerlist);
-
   if (dinnerlist) {
     let i = -1;
     return (
@@ -34,7 +32,7 @@ function Dinner(props) {
             }
 
             return (
-              <tr>
+              <tr key={i}>
                 <th>
                   {dinnerlist.data.mealServiceDietInfo[1].row[i].MMEAL_SC_NM}
                 </th>

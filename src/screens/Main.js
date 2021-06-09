@@ -162,7 +162,6 @@ const ControlledTabs = (props) => {
 const ControlledUserInfo = (props) => {
   const { userData, prop } = props;
 
-  console.log(userData);
   return (
     <Container>
       <Card style={{ width: "100%" }} className="text-center">
@@ -185,6 +184,7 @@ const ControlledUserInfo = (props) => {
             onClick={() => {
               localStorage.removeItem("TOKEN");
               tokenData(null);
+              udata(null);
               prop.history.push("/");
             }}
           >
@@ -206,7 +206,6 @@ const ControlledUserInfo = (props) => {
 
 function Main(props) {
   const [article, setArticle] = useState(null);
-  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     if (!tokenData()) props.history.push("/login");
@@ -216,7 +215,7 @@ function Main(props) {
       GetUserInfo();
       GetArticle({ setArticle: setArticle });
     }
-  }, []);
+  }, [udata]);
 
   return (
     <Container fluid>

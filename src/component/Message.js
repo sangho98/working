@@ -4,7 +4,7 @@ import { tokenData } from "../Apollo";
 import { GetMessage } from "../utils/ApiConfig";
 
 const ListMessage = (props) => {
-  const { message, pageNum, pageNumEnd, setTypeModal, setMessageId } = props;
+  const { message, pageNum, pageNumEnd, settypemodal, setMessageId } = props;
 
   return (
     <Table bordered hover>
@@ -15,7 +15,7 @@ const ListMessage = (props) => {
         </tr>
       </thead>
       <tbody>
-        {message.slice(pageNum, pageNumEnd).map((m) => {
+        {message.data.slice(pageNum, pageNumEnd).map((m) => {
           return (
             <tr key={m.id}>
               <td style={{ textAlign: "center" }}>{m.id}</td>
@@ -23,11 +23,11 @@ const ListMessage = (props) => {
               <td
                 style={{ textAlign: "center" }}
                 onClick={() => {
-                  setTypeModal("2");
+                  settypemodal("2");
                   setMessageId(m.id);
                 }}
               >
-                {m.title}
+                {m.content}
               </td>
             </tr>
           );
@@ -42,24 +42,21 @@ const MessageDetail = (props) => {
   return (
     <Table bordered hover>
       <thead>
-        {message.map((m) => {
+        {message.data.map((m) => {
           if (m.id === messageId) {
             return (
               <tr>
-                <th style={{ width: "10%", textAlign: "center" }}>제목</th>
-                <td style={{ width: "90%", textAlign: "center" }}>{m.title}</td>
+                <th style={{ textAlign: "center" }}>내용</th>
               </tr>
             );
           }
         })}
       </thead>
       <tbody>
-        {message.map((m) => {
+        {message.data.map((m) => {
           if (m.id === messageId) {
             return (
               <tr key={m.id}>
-                <th style={{ textAlign: "center" }}>내용</th>
-
                 <td style={{ textAlign: "center" }}>{m.content}</td>
               </tr>
             );
@@ -72,32 +69,48 @@ const MessageDetail = (props) => {
 
 function Message(props) {
   const {
-    typeModal,
-    setTypeModal,
+    typemodal,
     pageNum,
     pageNumEnd,
+    settypemodal,
     setMessageId,
     messageId,
   } = props;
+  const [nullm, setnullm] = useState(false);
 
-  const [message, setMessage] = useState(null);
+  const [message, setmessage] = useState(null);
 
   useEffect(() => {
-    GetMessage({ data: tokenData(), setMessage: setMessage });
-  }, []);
+    if (!message) GetMessage({ setmessage: setmessage });
+  }, [message]);
+
+  if (nullm) {
+    return (
+      <Table bordered hover>
+        <thead>
+          <tr></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>메시지가 없습니다.</td>
+          </tr>
+        </tbody>
+      </Table>
+    );
+  }
 
   if (message) {
-    if (typeModal === "1") {
+    if (typemodal === "1") {
       return (
         <ListMessage
           message={message}
           pageNum={pageNum}
           pageNumEnd={pageNumEnd}
-          setTypeModal={setTypeModal}
+          settypemodal={settypemodal}
           setMessageId={setMessageId}
         />
       );
-    } else if (typeModal === "2") {
+    } else if (typemodal === "2") {
       return <MessageDetail message={message} messageId={messageId} />;
     }
   } else {
