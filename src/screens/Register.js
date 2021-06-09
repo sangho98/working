@@ -12,6 +12,7 @@ import {
   FormControl,
 } from "react-bootstrap";
 import {
+  GetSchoolInfo,
   PostCheckEmail,
   PostCheckNickname,
   PostRegister,
@@ -28,9 +29,13 @@ function Register(props) {
   const [username, setUsername] = useState(null);
   const [nickname, setNickname] = useState(null);
 
-  const [region, setRegion] = useState(null);
-  const [resResult, setResResult] = useState(false);
+  const [educationcenter, seteducationcenter] = useState(null);
+  const [schoolname, setschoolname] = useState(null);
+  const [grade, setgrade] = useState(null);
+  const [classnum, setclassnum] = useState(null);
 
+  const [resResult, setResResult] = useState(false);
+  const [reg, setreg] = useState(false);
   const [duplicateNick, setDuplicateNick] = useState(false);
   const [duplicateEmail, setDuplicateEmail] = useState(false);
 
@@ -61,20 +66,24 @@ function Register(props) {
     setPassword(e.target.value);
   };
 
-  const onChangeRegion = (e) => {
+  const onChangeEducationCenter = (e) => {
+    seteducationcenter(e.target.value);
+    console.log(educationcenter);
+  };
+  const onChangeSchoolname = (e) => {
+    setschoolname(e.target.value);
+  };
+  const onChangeClassNum = (e) => {
+    setclassnum(e.target.value);
+  };
+  const onChangeGrade = (e) => {
     switch (e.target.value) {
-      case "서울":
-        setRegion("Seoul");
-        break;
-      case "인천":
-        setRegion("Incheon");
-        break;
-      case "정읍":
-        setRegion("Jeongeup");
-        break;
-      case "익산":
-        setRegion("Iksan");
-        break;
+      case "1학년":
+        setgrade("1");
+      case "2학년":
+        setgrade("2");
+      case "3학년":
+        setgrade("3");
     }
   };
 
@@ -197,17 +206,92 @@ function Register(props) {
           </Form.Row>
           <Form.Row style={{ marginTop: "0.5rem" }}>
             <Col>
+              <Form.Control as="select" defaultValue="Choose...">
+                <option>지역 보기</option>
+                <option>서울특별시</option>
+                <option>부산광역시</option>
+                <option>대구광역시</option>
+                <option>인천광역시</option>
+                <option>광주광역시</option>
+                <option>대전광역시</option>
+                <option>울산광역시</option>
+                <option>세종특별자치시</option>
+                <option>경기도</option>
+                <option>강원도</option>
+                <option>충청북도</option>
+                <option>충청남도</option>
+                <option>전라북도</option>
+                <option>전라남도</option>
+                <option>경상북도</option>
+                <option>경상남도</option>
+                <option>제주특별자치도</option>
+              </Form.Control>
+            </Col>
+          </Form.Row>
+          <Form.Row style={{ marginTop: "0.5rem" }}>
+            <Col md={8}>
+              <Form.Control
+                type="text"
+                placeholder="Ex. 전라북도"
+                onChange={onChangeEducationCenter}
+              />
+            </Col>
+            <Col md={4}>
+              <Button
+                style={{ width: "100%" }}
+                onClick={() => {
+                  GetSchoolInfo({
+                    setreg: setreg,
+                    schoolname: schoolname,
+                    educationcenter: educationcenter,
+                  });
+                }}
+              >
+                지역 검증
+              </Button>
+            </Col>
+          </Form.Row>
+          <Form.Row style={{ marginTop: "0.3rem" }}>
+            <Col md={8}>
+              <Form.Control
+                type="text"
+                placeholder="ㅇㅇ고등학교"
+                onChange={onChangeSchoolname}
+              />
+            </Col>
+            <Col md={4}>
+              <Button
+                style={{ width: "100%" }}
+                onClick={() => {
+                  GetSchoolInfo({
+                    setreg: setreg,
+                    schoolname: schoolname,
+                    educationcenter: educationcenter,
+                  });
+                }}
+              >
+                학교 검증
+              </Button>
+            </Col>
+          </Form.Row>
+          <Form.Row style={{ marginTop: "0.5rem" }}>
+            <Col md={9}>
               <Form.Control
                 as="select"
                 defaultValue="Choose..."
-                onChange={onChangeRegion}
+                onChange={onChangeGrade}
               >
-                <option>지역 선택</option>
-                <option>서울</option>
-                <option>인천</option>
-                <option>정읍</option>
-                <option>익산</option>
+                <option>학년 선택</option>
+                <option>1학년</option>
+                <option>2학년</option>
+                <option>3학년</option>
               </Form.Control>
+            </Col>
+            <Col md={2}>
+              <Form.Control type="text" onChange={onChangeClassNum} />
+            </Col>
+            <Col>
+              <Form.Control plaintext readOnly defaultValue="반" />
             </Col>
           </Form.Row>
           <Form.Row style={{ marginTop: "0.3rem" }}>
@@ -235,12 +319,26 @@ function Register(props) {
                     return;
                   }
 
+                  console.log(emailFull);
+                  console.log(password);
+                  console.log(username);
+                  console.log(nickname);
+                  console.log(educationcenter);
+                  console.log(grade);
+                  console.log(classnum);
+                  console.log(schoolname);
+
                   if (
                     emailFront === null ||
                     emailBack === null ||
                     password === null ||
                     username === null ||
-                    region === null
+                    educationcenter === null ||
+                    educationcenter === "지역 선택" ||
+                    grade === null ||
+                    grade === "학년 선택" ||
+                    classnum === null ||
+                    schoolname === null
                   ) {
                     console.log("No Input");
                     return;
@@ -250,7 +348,10 @@ function Register(props) {
                     password: password,
                     username: username,
                     nickname: nickname,
-                    region: region,
+                    educationcenter: educationcenter,
+                    schoolname: schoolname,
+                    grade: grade,
+                    classnum: classnum,
                   };
                   console.log(`regData : ${regData}`);
 

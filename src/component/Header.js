@@ -7,7 +7,7 @@ import {
   faUserFriends,
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { useState } from "react";
 import { Button, Modal, FormControl, Form, Nav, Navbar } from "react-bootstrap";
 import { tokenData } from "../Apollo";
@@ -23,7 +23,7 @@ const Headalign = styled.div`
 `;
 
 const MessageShow = (props) => {
-  const { setModalShow, typeModal, setTypeModal, prop, dinnerList } = props;
+  const { setmodalshow, typemodal, settypemodal, prop, dinnerlist } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [messageId, setMessageId] = useState(null);
@@ -36,9 +36,9 @@ const MessageShow = (props) => {
       centered
     >
       <Modal.Header closeButton>
-        {typeModal === "1" || typeModal === "2" ? (
+        {typemodal === "1" || typemodal === "2" ? (
           <Modal.Title id="contained-modal-title-vcenter">쪽지함</Modal.Title>
-        ) : typeModal === "3" ? (
+        ) : typemodal === "3" ? (
           <Modal.Title id="contained-modal-title-vcenter">
             친구 목록
           </Modal.Title>
@@ -49,24 +49,24 @@ const MessageShow = (props) => {
         )}
       </Modal.Header>
       <Modal.Body>
-        {typeModal === "1" || typeModal === "2" ? (
+        {typemodal === "1" || typemodal === "2" ? (
           <Message
             pageNum={pageNum}
             pageNumEnd={pageNumEnd}
-            setTypeModal={setTypeModal}
+            settypemodal={settypemodal}
             setMessageId={setMessageId}
             messageId={messageId}
-            typeModal={typeModal}
+            typemodal={typemodal}
             prop={prop}
           />
-        ) : typeModal === "3" ? (
+        ) : typemodal === "3" ? (
           <Friend prop={prop} />
         ) : (
-          <Dinner prop={prop} dinnerList={dinnerList} />
+          <Dinner prop={prop} dinnerlist={dinnerlist} />
         )}
       </Modal.Body>
       <Modal.Footer>
-        {typeModal === "1" ? (
+        {typemodal === "1" ? (
           <Button
             onClick={() => {
               if (pageNum <= 0) {
@@ -79,7 +79,7 @@ const MessageShow = (props) => {
             Prev
           </Button>
         ) : null}
-        {typeModal === "1" ? (
+        {typemodal === "1" ? (
           <Button
             onClick={() => {
               setPageNum(pageNum + 5);
@@ -92,7 +92,7 @@ const MessageShow = (props) => {
 
         <Button
           onClick={() => {
-            setModalShow(false);
+            setmodalshow(false);
           }}
         >
           Close
@@ -103,12 +103,12 @@ const MessageShow = (props) => {
 };
 
 function Header(props) {
-  const [modalShow, setModalShow] = React.useState(false);
-  const [typeModal, setTypeModal] = useState(true);
-  const [dinnerList, setDinnerList] = useState(null);
+  const [modalshow, setmodalshow] = React.useState(false);
+  const [typemodal, settypemodal] = useState(true);
+  const [dinnerlist, setdinnerlist] = useState(null);
 
   useEffect(() => {
-    GetDinnerList({ data: tokenData(), setDinnerList: setDinnerList });
+    GetDinnerList({ data: tokenData(), setdinnerlist: setdinnerlist });
   }, []);
 
   const data = tokenData();
@@ -121,17 +121,15 @@ function Header(props) {
   } else {
     return (
       <Headalign>
-        <clientSet></clientSet>
-
         <MessageShow
-          show={modalShow}
-          onHide={() => setModalShow(false)}
+          show={modalshow}
+          onHide={() => setmodalshow(false)}
           data={data}
-          typeModal={typeModal}
-          setModalShow={setModalShow}
-          setTypeModal={setTypeModal}
+          typemodal={typemodal}
+          setmodalshow={setmodalshow}
+          settypemodal={settypemodal}
           prop={props}
-          dinnerList={dinnerList}
+          dinnerlist={dinnerlist}
         ></MessageShow>
 
         <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>
@@ -147,8 +145,8 @@ function Header(props) {
               color="white"
               size="2x"
               onClick={() => {
-                setTypeModal("4");
-                setModalShow(true);
+                settypemodal("4");
+                setmodalshow(true);
               }}
             ></FontAwesomeIcon>
             <FontAwesomeIcon
@@ -157,8 +155,8 @@ function Header(props) {
               color="white"
               size="2x"
               onClick={() => {
-                setTypeModal("3");
-                setModalShow(true);
+                settypemodal("3");
+                setmodalshow(true);
               }}
             ></FontAwesomeIcon>
 
@@ -168,8 +166,8 @@ function Header(props) {
               color="white"
               size="2x"
               onClick={() => {
-                setTypeModal("1");
-                setModalShow(true);
+                settypemodal("1");
+                setmodalshow(true);
               }}
             ></FontAwesomeIcon>
 
@@ -181,6 +179,8 @@ function Header(props) {
                 size="2x"
                 onClick={() => {
                   localStorage.removeItem("TOKEN");
+                  tokenData(null);
+                  <Redirect to="/" />;
                 }}
               ></FontAwesomeIcon>
             </Link>

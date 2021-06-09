@@ -8,7 +8,7 @@ export const client = axios.create({
   },
 });
 
-export const clientSet = (axios.defaults.headers.common["Authorization"] =
+export const clientset = (axios.defaults.headers.common["Authorization"] =
   localStorage.getItem("TOKEN"));
 
 export const GetMessage = (props) => {
@@ -158,7 +158,10 @@ export const PostRegister = (props) => {
     nickname: data.nickname,
     password: data.password,
     email: data.email,
-    region: data.region,
+    educationCenter: data.educationcenter,
+    schoolname: data.schoolname,
+    grade: data.grade,
+    classnum: data.classnum,
   });
   console.log(json);
   axios
@@ -218,7 +221,7 @@ export const GetFriendFollowList = async (props) => {
 };
 
 export const GetDinnerList = async (props) => {
-  const { setDinnerList } = props;
+  const { setdinnerlist } = props;
 
   await axios
     .get("/api/hub/mealServiceDietInfo", {
@@ -232,7 +235,7 @@ export const GetDinnerList = async (props) => {
       },
     })
     .then((res) => {
-      setDinnerList(res);
+      setdinnerlist(res);
       console.log(res);
     })
     .catch((err) => {
@@ -241,13 +244,37 @@ export const GetDinnerList = async (props) => {
 };
 
 export const GetSchoolInfo = async (props) => {
+  const { setreg, schoolname, educationcenter } = props;
+
+  let testmap = new Map();
+
+  testmap.set("서울특별시", "B10");
+  testmap.set("부산광역시", "C10");
+  testmap.set("대구광역시", "D10");
+  testmap.set("인천광역시", "E10");
+  testmap.set("광주광역시", "F10");
+  testmap.set("대전광역시", "G10");
+  testmap.set("울산광역시", "H10");
+  testmap.set("세종특별자치시", "I10");
+  testmap.set("경기도", "J10");
+  testmap.set("강원도", "K10");
+  testmap.set("충청북도", "M10");
+  testmap.set("충청남도", "N10");
+  testmap.set("전라북도", "P10");
+  testmap.set("전라남도", "Q10");
+  testmap.set("경상북도", "R10");
+  testmap.set("경상남도", "S10");
+  testmap.set("제주특별자치도", "T10");
+
   await axios
     .get("/api/hub/schoolInfo", {
       params: {
         KEY: "d42c851653dc4a008d9e831aaf3b8a31",
         Type: "json",
         pIndex: "1",
-        pSize: "100",
+        pSize: "1000",
+        ATPT_OFCDC_SC_CODE: testmap.get(educationcenter),
+        SCHUL_NM: schoolname,
       },
     })
     .then((res) => {

@@ -10,7 +10,6 @@ function MessageShow(props) {
   const { data, setModalShow, typeModal, setTypeModal, prop } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
-  const [show, setShow] = useState(true);
   const [messageId, setMessageId] = useState(null);
   const [message, setMessage] = useState(null);
 

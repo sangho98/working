@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 
 function Dinner(props) {
-  const { dinnerList } = props;
+  const { dinnerlist } = props;
 
-  console.log(dinnerList);
+  console.log(dinnerlist.data.mealServiceDietInfo[1].row);
   return (
     <Table>
       <thead>

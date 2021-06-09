@@ -1,5 +1,5 @@
 import react, { useEffect, useState } from "react";
-import { Redirect } from "react-router";
+
 import { GetConfirmEmail } from "../utils/ApiConfig";
 
 function Confirm(props) {
