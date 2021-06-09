@@ -35,12 +35,14 @@ function Register(props) {
   const [classnum, setclassnum] = useState(null);
 
   const [resResult, setResResult] = useState(false);
-  const [reg, setreg] = useState(false);
+  const [reg, setreg] = useState(true);
   const [duplicateNick, setDuplicateNick] = useState(false);
   const [duplicateEmail, setDuplicateEmail] = useState(false);
 
   const target = useRef(null);
   const target2 = useRef(null);
+  const target3 = useRef(null);
+  const target4 = useRef(null);
 
   useEffect(() => {
     setEmailFull(`${emailFront}@${emailBack}`);
@@ -246,9 +248,18 @@ function Register(props) {
                     educationcenter: educationcenter,
                   });
                 }}
+                ref={target4}
               >
                 지역 검증
               </Button>
+              <Overlay target={target.current} show={!reg} placement="right">
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    지역 오류!<br></br>
+                    <strong>지역</strong>이 올바르지않습니다.
+                  </Tooltip>
+                )}
+              </Overlay>
             </Col>
           </Form.Row>
           <Form.Row style={{ marginTop: "0.3rem" }}>
@@ -269,9 +280,18 @@ function Register(props) {
                     educationcenter: educationcenter,
                   });
                 }}
+                ref={target3}
               >
                 학교 검증
               </Button>
+              <Overlay target={target.current} show={!reg} placement="right">
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    학교 오류!<br></br>
+                    <strong>학교</strong>이(가) 올바르지않습니다.
+                  </Tooltip>
+                )}
+              </Overlay>
             </Col>
           </Form.Row>
           <Form.Row style={{ marginTop: "0.5rem" }}>

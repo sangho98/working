@@ -6,6 +6,7 @@ import {
   faPowerOff,
   faUserFriends,
   faUtensils,
+  faCalendarAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, Redirect } from "react-router-dom";
 import { useState } from "react";
@@ -14,8 +15,9 @@ import { tokenData } from "../Apollo";
 import Friend from "./Friend";
 import Dinner from "./Dinner";
 import Message from "./Message";
+import Schedule from "./Schedule";
 
-import { GetDinnerList } from "../utils/ApiConfig";
+import { GetDinnerList, GetTimeList } from "../utils/ApiConfig";
 
 const Headalign = styled.div`
   width: 100%;
@@ -23,7 +25,8 @@ const Headalign = styled.div`
 `;
 
 const MessageShow = (props) => {
-  const { setmodalshow, typemodal, settypemodal, prop, dinnerlist } = props;
+  const { setmodalshow, typemodal, settypemodal, prop, dinnerlist, schedule } =
+    props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [messageId, setMessageId] = useState(null);
@@ -42,10 +45,12 @@ const MessageShow = (props) => {
           <Modal.Title id="contained-modal-title-vcenter">
             친구 목록
           </Modal.Title>
-        ) : (
+        ) : typemodal === "4" ? (
           <Modal.Title id="contained-modal-title-vcenter">
             오늘의 급식
           </Modal.Title>
+        ) : (
+          <Modal.Title id="contained-modal-title-vcenter">시간표</Modal.Title>
         )}
       </Modal.Header>
       <Modal.Body>
@@ -61,8 +66,10 @@ const MessageShow = (props) => {
           />
         ) : typemodal === "3" ? (
           <Friend prop={prop} />
-        ) : (
+        ) : typemodal === "4" ? (
           <Dinner prop={prop} dinnerlist={dinnerlist} />
+        ) : (
+          <Schedule prop={prop} schedule={schedule} />
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -106,9 +113,11 @@ function Header(props) {
   const [modalshow, setmodalshow] = React.useState(false);
   const [typemodal, settypemodal] = useState(true);
   const [dinnerlist, setdinnerlist] = useState(null);
+  const [schedule, setschedule] = useState(null);
 
   useEffect(() => {
     GetDinnerList({ data: tokenData(), setdinnerlist: setdinnerlist });
+    GetTimeList({ data: tokenData(), setschedule: setschedule });
   }, []);
 
   const data = tokenData();
@@ -130,6 +139,7 @@ function Header(props) {
           settypemodal={settypemodal}
           prop={props}
           dinnerlist={dinnerlist}
+          schedule={schedule}
         ></MessageShow>
 
         <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>
@@ -139,6 +149,16 @@ function Header(props) {
           <Nav className="mr-auto"></Nav>
 
           <Nav>
+            <FontAwesomeIcon
+              icon={faCalendarAlt}
+              style={{ paddingRight: "13px" }}
+              color="white"
+              size="2x"
+              onClick={() => {
+                settypemodal("5");
+                setmodalshow(true);
+              }}
+            ></FontAwesomeIcon>
             <FontAwesomeIcon
               icon={faUtensils}
               style={{ paddingRight: "13px" }}
