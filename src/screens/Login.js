@@ -11,7 +11,7 @@ import {
   Overlay,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { messageAlram, tokenData } from "../Apollo";
+import { logged, messageAlram, tokenData } from "../Apollo";
 
 function Login(props) {
   const [email, setEmail] = React.useState("");
@@ -41,8 +41,7 @@ function Login(props) {
         localStorage.setItem("TOKEN", `Bearer ${res.data}`);
         setLoginError(false);
         tokenData(localStorage.getItem("TOKEN"));
-        messageAlram(true);
-
+        logged(true);
         props.history.push("/");
       })
       .catch((err) => {

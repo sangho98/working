@@ -33,7 +33,7 @@ function Register(props) {
   const [schoolname, setschoolname] = useState(null);
   const [grade, setgrade] = useState(null);
   const [classnum, setclassnum] = useState(null);
-
+  const [schoolcode, setschoolcode] = useState(null);
   const [resResult, setResResult] = useState(false);
   const [reg, setreg] = useState(true);
   const [duplicateNick, setDuplicateNick] = useState(false);
@@ -278,6 +278,7 @@ function Register(props) {
                     setreg: setreg,
                     schoolname: schoolname,
                     educationcenter: educationcenter,
+                    setschoolcode: setschoolcode,
                   });
                 }}
                 ref={target3}
@@ -347,6 +348,7 @@ function Register(props) {
                   console.log(grade);
                   console.log(classnum);
                   console.log(schoolname);
+                  console.log(schoolcode);
 
                   if (
                     emailFront === null ||
@@ -372,6 +374,7 @@ function Register(props) {
                     schoolname: schoolname,
                     grade: grade,
                     classnum: classnum,
+                    schoolcode: schoolcode,
                   };
                   console.log(`regData : ${regData}`);
 

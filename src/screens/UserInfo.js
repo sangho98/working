@@ -1,20 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { tokenData } from "../Apollo";
+import { tokenData, udata } from "../Apollo";
 import { GetUserInfo, PutUserInfo } from "../utils/ApiConfig";
 
 function UserInfo(props) {
-  const [userData, setUserData] = useState(null);
   const [newNickname, setNewNickname] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
   const [prevPassword, setPrevPassword] = useState(null);
 
-  useEffect(() => {
-    GetUserInfo({
-      data: tokenData(),
-      setUserData: setUserData,
-    });
-  }, []);
   const onChangePrevPassword = (e) => {
     setPrevPassword(e.target.value);
   };
@@ -52,7 +45,7 @@ function UserInfo(props) {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={userData && userData.email}
+                  defaultValue={udata() && udata().email}
                 />
               </Form.Group>
               <Form.Group as={Col}>
@@ -60,13 +53,13 @@ function UserInfo(props) {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={userData && userData.username}
+                  defaultValue={udata() && udata().username}
                 />
               </Form.Group>
               <Form.Group as={Col}>
                 <Form.Label>닉네임</Form.Label>
                 <Form.Control
-                  placeholder={`현재 닉네임 : ${userData && userData.nickname}`}
+                  placeholder={`현재 닉네임 : ${udata() && udata().nickname}`}
                   onChange={onChangeNewNickname}
                 />
               </Form.Group>
@@ -106,7 +99,7 @@ function UserInfo(props) {
                   custom
                 >
                   <option value="0">
-                    현재 지역 : {userData && userData.region}
+                    현재 지역 : {udata() && udata().region}
                   </option>
                   <option value="1">서울</option>
                   <option value="2">인천</option>

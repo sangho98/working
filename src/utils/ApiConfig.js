@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { tokenData } from "../Apollo";
+import { tokenData, udata } from "../Apollo";
 import { SEM, SERVER_URL } from "./URL";
 
 export const client = axios.create({
@@ -62,8 +62,6 @@ export const GetArticle = async (props) => {
 };
 
 export const GetUserInfo = async (props) => {
-  const { setUserData } = props;
-
   await axios
     .get(SERVER_URL + "/user", {
       headers: {
@@ -71,7 +69,8 @@ export const GetUserInfo = async (props) => {
       },
     })
     .then((res) => {
-      setUserData(res.data);
+      console.log(res);
+      udata(res.data);
       console.log(res.data);
     })
     .catch((err) => {
@@ -183,6 +182,7 @@ export const PostRegister = (props) => {
     schoolname: data.schoolname,
     grade: data.grade,
     classnum: data.classnum,
+    schoolnumber: data.schoolcode,
   });
   console.log(json);
   axios
@@ -264,22 +264,24 @@ export const GetDinnerList = async (props) => {
     });
 };
 
-export const GetTimeList = async (props) => {
-  const { setschedule } = props;
-
-  await axios
+export const GetTimeList = (props) => {
+  const { setschedule, code } = props;
+  console.log("GET TIMELIST");
+  axios
     .get("/api/hub/hisTimetable", {
       params: {
         KEY: "d42c851653dc4a008d9e831aaf3b8a31",
         Type: "json",
         AY: "2021", // 년도
         SEM: SEM, //학기
-        ATPT_OFCDC_SC_CODE: "T10", // 교육청 코드
-        SCHUL_NM: "원광고등학교", // 학교 이름
-        GRADE: "3", //학년
-        CLASS_NM: "2", //반
+        ATPT_OFCDC_SC_CODE: udata().educationCenter, // 교육청 코드
+        SD_SCHUL_CODE: udata().schoolnumber, // 학교 이름
+        GRADE: udata().grade, //학년
+        CLASS_NM: udata().classnum, //반
         pIndex: "1",
-        pSize: "10",
+        pSize: "1000",
+        TI_FROM_YMD: "20210607",
+        TI_TO_YMD: "20210611",
       },
     })
     .then((res) => {
@@ -292,7 +294,7 @@ export const GetTimeList = async (props) => {
 };
 
 export const GetSchoolInfo = async (props) => {
-  const { setreg, schoolname, educationcenter } = props;
+  const { setreg, setschoolcode, schoolname, educationcenter } = props;
 
   let testmap = new Map();
 
@@ -314,31 +316,24 @@ export const GetSchoolInfo = async (props) => {
   testmap.set("경상남도", "S10");
   testmap.set("제주특별자치도", "T10");
 
-  if (!testmap.get(educationcenter)) {
-    setreg(false);
-    return;
-  } else {
-    await axios
-      .get("/api/hub/schoolInfo", {
-        params: {
-          KEY: "d42c851653dc4a008d9e831aaf3b8a31",
-          Type: "json",
-          pIndex: "1",
-          pSize: "1000",
-          ATPT_OFCDC_SC_CODE: testmap.get(educationcenter),
-          SCHUL_NM: schoolname,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        console.log(res.data.schoolInfo[0].head[1].RESULT);
-        setreg(true);
-      })
-      .catch((err) => {
-        console.log(err);
-        setreg(false);
-      });
-  }
+  await axios
+    .get("/api/hub/schoolInfo", {
+      params: {
+        KEY: "d42c851653dc4a008d9e831aaf3b8a31",
+        Type: "json",
+        pIndex: "1",
+        pSize: "1000",
+        ATPT_OFCDC_SC_CODE: testmap.get(educationcenter),
+        SCHUL_NM: schoolname,
+      },
+    })
+    .then((res) => {
+      console.log(res);
+      setschoolcode(res.data.schoolInfo[1].row[0].SD_SCHUL_CODE);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export const GetConfirmEmail = async (props) => {

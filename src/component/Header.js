@@ -11,13 +11,18 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import { useState } from "react";
 import { Button, Modal, FormControl, Form, Nav, Navbar } from "react-bootstrap";
-import { tokenData } from "../Apollo";
+import { logged, tokenData, udata } from "../Apollo";
 import Friend from "./Friend";
 import Dinner from "./Dinner";
 import Message from "./Message";
 import Schedule from "./Schedule";
 
-import { GetDinnerList, GetTimeList } from "../utils/ApiConfig";
+import {
+  GetDinnerList,
+  GetSchoolInfo,
+  GetTimeList,
+  GetUserInfo,
+} from "../utils/ApiConfig";
 
 const Headalign = styled.div`
   width: 100%;
@@ -25,8 +30,7 @@ const Headalign = styled.div`
 `;
 
 const MessageShow = (props) => {
-  const { setmodalshow, typemodal, settypemodal, prop, dinnerlist, schedule } =
-    props;
+  const { setmodalshow, typemodal, settypemodal, prop } = props;
   const [pageNum, setPageNum] = useState(0);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [messageId, setMessageId] = useState(null);
@@ -67,9 +71,9 @@ const MessageShow = (props) => {
         ) : typemodal === "3" ? (
           <Friend prop={prop} />
         ) : typemodal === "4" ? (
-          <Dinner prop={prop} dinnerlist={dinnerlist} />
+          <Dinner prop={prop} />
         ) : (
-          <Schedule prop={prop} schedule={schedule} />
+          <Schedule prop={prop} />
         )}
       </Modal.Body>
       <Modal.Footer>
@@ -112,13 +116,6 @@ const MessageShow = (props) => {
 function Header(props) {
   const [modalshow, setmodalshow] = React.useState(false);
   const [typemodal, settypemodal] = useState(true);
-  const [dinnerlist, setdinnerlist] = useState(null);
-  const [schedule, setschedule] = useState(null);
-
-  useEffect(() => {
-    GetDinnerList({ data: tokenData(), setdinnerlist: setdinnerlist });
-    GetTimeList({ data: tokenData(), setschedule: setschedule });
-  }, []);
 
   const data = tokenData();
 
@@ -138,8 +135,6 @@ function Header(props) {
           setmodalshow={setmodalshow}
           settypemodal={settypemodal}
           prop={props}
-          dinnerlist={dinnerlist}
-          schedule={schedule}
         ></MessageShow>
 
         <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>

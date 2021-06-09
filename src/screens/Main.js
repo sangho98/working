@@ -18,7 +18,7 @@ import {
 
 import { GetArticle, GetUserInfo } from "../utils/ApiConfig";
 import { Link } from "react-router-dom";
-import { tokenData } from "../Apollo";
+import { tokenData, udata } from "../Apollo";
 
 const ListArticle = (props) => {
   const { article } = props;
@@ -161,6 +161,8 @@ const ControlledTabs = (props) => {
 
 const ControlledUserInfo = (props) => {
   const { userData, prop } = props;
+
+  console.log(userData);
   return (
     <Container>
       <Card style={{ width: "100%" }} className="text-center">
@@ -211,8 +213,8 @@ function Main(props) {
   });
   useEffect(() => {
     if (tokenData()) {
-      GetUserInfo({ data: tokenData(), setUserData: setUserData });
-      GetArticle({ data: tokenData(), setArticle: setArticle });
+      GetUserInfo();
+      GetArticle({ setArticle: setArticle });
     }
   }, []);
 
@@ -233,7 +235,7 @@ function Main(props) {
             </Jumbotron>
           </Col>
           <Col md={3}>
-            <ControlledUserInfo userData={userData} prop={props} />
+            <ControlledUserInfo userData={udata()} prop={props} />
           </Col>
         </Row>
 

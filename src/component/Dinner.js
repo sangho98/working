@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
+import { GetDinnerList } from "../utils/ApiConfig";
 
 function Dinner(props) {
-  const { dinnerlist } = props;
+  const [dinnerlist, setdinnerlist] = useState(null);
+
+  useEffect(() => {
+    GetDinnerList({ setdinnerlist: setdinnerlist });
+  }, []);
 
   console.log(dinnerlist.data.mealServiceDietInfo[1].row);
   return (
