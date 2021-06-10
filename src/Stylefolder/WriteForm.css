@@ -1,0 +1,30 @@
+div {
+  width: 100%;
+}
+body {
+  background-color: #ffffff;
+}
+.Write_form li {
+  list-style: none;
+}
+.Write_form h1 {
+  text-align: center;
+}
+input {
+  align-items: center;
+  width: 500px;
+  height: 100px;
+}
+.Titleinput input {
+  position: 50%;
+  align-items: center;
+  width: 60%;
+  height: 30px;
+}
+.Contentinput {
+  padding-top: 10px;
+}
+.Contentinput input {
+  width: 60%;
+  height: 50%;
+}

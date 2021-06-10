@@ -24,10 +24,11 @@ export const GetMessage = async (props) => {
       },
     })
     .then((res) => {
-      console.log(res);
       if (res.data.length === 0) {
-        setnullm(false);
+        console.log("No Message");
+        setnullm(true);
       } else {
+        console.log("Yes Message");
         setmessage(res);
       }
     })

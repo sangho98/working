@@ -21,7 +21,9 @@ import { Link } from "react-router-dom";
 import { tokenData, udata } from "../Apollo";
 
 const ListArticle = (props) => {
-  const { article } = props;
+  const { data } = props;
+
+  console.log(data);
 
   return (
     <Table bordered hover>
@@ -31,8 +33,8 @@ const ListArticle = (props) => {
         </tr>
       </thead>
       <tbody>
-        {article &&
-          article.slice(0, 5).map((a) => {
+        {data &&
+          data.slice(0, 5).map((a) => {
             return (
               <tr key={a.id}>
                 <td style={{ textAlign: "center" }}>{a.title}</td>
@@ -48,6 +50,8 @@ const ControlledTabs = (props) => {
   const [show, setShow] = React.useState(true);
   const { article } = props;
 
+  console.log(article);
+
   return (
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
       <Row>
@@ -55,9 +59,9 @@ const ControlledTabs = (props) => {
           <Nav variant="pills" className="flex-column">
             <Nav.Item>
               <Nav.Link
-                eventKey="HotArticle"
-                active={show === "HotArticle"}
-                onMouseEnter={() => setShow("HotArticle")}
+                eventKey="hotboard"
+                active={show === "hotboard"}
+                onMouseEnter={() => setShow("hotboard")}
                 onMouseLeave={() => setShow(false)}
                 onClick={() => {
                   props.props.history.push(`/post/${show}`);
@@ -69,9 +73,9 @@ const ControlledTabs = (props) => {
 
             <Nav.Item>
               <Nav.Link
-                eventKey="FreeArticle"
-                active={show === "FreeArticle"}
-                onMouseEnter={() => setShow("FreeArticle")}
+                eventKey="freeboard"
+                active={show === "freeboard"}
+                onMouseEnter={() => setShow("freeboard")}
                 onMouseLeave={() => setShow(false)}
                 onClick={() => {
                   props.props.history.push(`/post/${show}`);
@@ -82,9 +86,9 @@ const ControlledTabs = (props) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
-                eventKey="InfoArticle"
-                active={show === "InfoArticle"}
-                onMouseEnter={() => setShow("InfoArticle")}
+                eventKey="infoboard"
+                active={show === "infoboard"}
+                onMouseEnter={() => setShow("infoboard")}
                 onMouseLeave={() => setShow(false)}
                 onClick={() => {
                   props.props.history.push(`/post/${show}`);
@@ -95,9 +99,9 @@ const ControlledTabs = (props) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
-                eventKey="MatchingArticle"
-                active={show === "MatchingArticle"}
-                onMouseEnter={() => setShow("MatchingArticle")}
+                eventKey="matchingboard"
+                active={show === "matchingboard"}
+                onMouseEnter={() => setShow("matchingboard")}
                 onMouseLeave={() => setShow(false)}
                 onClick={() => {
                   props.props.history.push(`/post/${show}`);
@@ -108,9 +112,9 @@ const ControlledTabs = (props) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link
-                eventKey="AdvertiseArticle"
-                active={show === "AdvertiseArticle"}
-                onMouseEnter={() => setShow("AdvertiseArticle")}
+                eventKey="advertiseboard"
+                active={show === "advertiseboard"}
+                onMouseEnter={() => setShow("advertiseboard")}
                 onMouseLeave={() => setShow(false)}
                 onClick={() => {
                   props.props.history.push(`/post/${show}`);
@@ -123,24 +127,24 @@ const ControlledTabs = (props) => {
         </Col>
         <Col sm={7}>
           <Tab.Content>
-            <Tab.Pane eventKey="HotArticle" active={show === "HotArticle"}>
+            <Tab.Pane eventKey="hotboard" active={show === "hotboard"}>
               <ListArticle data={article} />
             </Tab.Pane>
-            <Tab.Pane eventKey="FreeArticle" active={show === "FreeArticle"}>
+            <Tab.Pane eventKey="freeboard" active={show === "freeboard"}>
               <ListArticle data={article} />
             </Tab.Pane>
-            <Tab.Pane eventKey="InfoArticle" active={show === "InfoArticle"}>
+            <Tab.Pane eventKey="infoboard" active={show === "infoboard"}>
               <ListArticle data={article} />
             </Tab.Pane>
             <Tab.Pane
-              eventKey="MatchingArticle"
-              active={show === "MatchingArticle"}
+              eventKey="matchingboard"
+              active={show === "matchingboard"}
             >
               <ListArticle data={article} />
             </Tab.Pane>
             <Tab.Pane
-              eventKey="AdvertiseArticle"
-              active={show === "AdvertiseArticle"}
+              eventKey="advertiseboard"
+              active={show === "advertiseboard"}
             >
               <ListArticle data={article} />
             </Tab.Pane>
@@ -216,6 +220,8 @@ function Main(props) {
       GetArticle({ setArticle: setArticle });
     }
   }, [udata]);
+
+  console.log(article);
 
   return (
     <Container fluid>

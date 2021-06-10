@@ -9,6 +9,10 @@ import Footer from "./component/Footer";
 import Main from "./screens/Main";
 import Logout from "./screens/Logout";
 import UserInfo from "./screens/UserInfo";
+import WriteForm from "./screens/WriteForm";
+import Content from "./screens/Content";
+import FreeBoard from "./screens/FreeBoard";
+import Letter from "./screens/Letter";
 import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { client } from "./utils/ApiConfig";
@@ -40,7 +44,34 @@ function App() {
               }}
               exact
             />
-
+            <Route
+              path="/post/:category/writeform"
+              component={(props) => {
+                return <WriteForm {...props}></WriteForm>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/freeboard/:num"
+              component={(props) => {
+                return <Content {...props}></Content>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/:boardname"
+              component={(props) => {
+                return <FreeBoard {...props}></FreeBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/freeboard/letter/:num"
+              component={(props) => {
+                return <Letter {...props}></Letter>;
+              }}
+              exact
+            ></Route>
             <Route
               path="/login"
               component={(props) => {

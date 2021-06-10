@@ -81,7 +81,7 @@ function Message(props) {
   const [message, setmessage] = useState(null);
 
   useEffect(() => {
-    if (!message) GetMessage({ setmessage: setmessage });
+    if (!message) GetMessage({ setmessage: setmessage, setnullm: setnullm });
   }, [message]);
 
   if (nullm) {
@@ -98,6 +98,7 @@ function Message(props) {
       </Table>
     );
   }
+  console.log(message);
 
   if (message) {
     if (typemodal === "1") {
