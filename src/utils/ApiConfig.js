@@ -87,14 +87,15 @@ export const GetUserInfo = async (props) => {
 export const PutUserInfo = (props) => {
   const { nickname, password } = props;
 
-  const formData = new FormData();
-  formData.append("nickname", nickname);
-  formData.append("password", password);
-
-  console.log(formData);
-
   axios
-    .put(SERVER_URL + "/user", formData)
+    .put(SERVER_URL + "/user", {
+      headers: {
+        Authorization: tokenData(),
+      },
+
+      nickname: nickname,
+      password: password,
+    })
     .then((res) => {
       console.log(res);
     })

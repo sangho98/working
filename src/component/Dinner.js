@@ -14,7 +14,7 @@ function Dinner(props) {
     return (
       <Table responsive>
         <thead>
-          <tr>
+          <tr style={{ textAlign: "center" }}>
             <th></th>
             <th>월</th>
             <th>화</th>
@@ -32,7 +32,7 @@ function Dinner(props) {
             }
 
             return (
-              <tr key={i}>
+              <tr key={i} style={{ textAlign: "center" }}>
                 <th>
                   {dinnerlist.data.mealServiceDietInfo[1].row[i].MMEAL_SC_NM}
                 </th>

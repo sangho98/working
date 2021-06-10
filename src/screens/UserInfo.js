@@ -18,9 +18,12 @@ function UserInfo(props) {
     setNewNickname(e.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await PutUserInfo({
+
+    console.log(newNickname);
+    console.log(newPassword);
+    PutUserInfo({
       nickname: newNickname,
       password: newPassword,
     });
@@ -132,7 +135,6 @@ function UserInfo(props) {
                 type="submit"
                 onClick={(e) => {
                   handleSubmit(e);
-                  window.location.href = "/";
                 }}
               >
                 Submit

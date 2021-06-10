@@ -21,7 +21,7 @@ function Schedule(props) {
     return (
       <Table>
         <thead>
-          <tr>
+          <tr style={{ textAlign: "center" }}>
             <th></th>
             <th>월</th>
             <th>화</th>
@@ -34,7 +34,7 @@ function Schedule(props) {
           {schedule.data.hisTimetable[1].row.slice(0, 7).map((m) => {
             i++;
             return (
-              <tr key={i}>
+              <tr key={i} style={{ textAlign: "center" }}>
                 <th>{schedule.data.hisTimetable[1].row[i].PERIO}</th>
                 <td>{schedule.data.hisTimetable[1].row[i].ITRT_CNTNT}</td>
                 <td>{schedule.data.hisTimetable[1].row[i + 6].ITRT_CNTNT}</td>

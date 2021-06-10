@@ -167,7 +167,7 @@ const ControlledUserInfo = (props) => {
       <Card style={{ width: "100%" }} className="text-center">
         <Image
           variant="top"
-          src="./test.png"
+          src="./user-solid.svg"
           style={{ maxWidth: "13rem", padding: "15px" }}
           roundedCircle
           className="mx-auto"

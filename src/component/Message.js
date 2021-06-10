@@ -45,7 +45,7 @@ const MessageDetail = (props) => {
         {message.data.map((m) => {
           if (m.id === messageId) {
             return (
-              <tr>
+              <tr key={m.id}>
                 <th style={{ textAlign: "center" }}>내용</th>
               </tr>
             );
