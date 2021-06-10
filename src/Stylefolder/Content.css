@@ -1,7 +1,6 @@
 .content_div {
   width: 600px;
   box-shadow: 0px 1px 3px grey;
-  height: 200px;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -29,7 +28,10 @@
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
-
+.write_reply input {
+  width: 600px;
+  height: 100px;
+}
 .write_reply button {
   width: 100px;
   height: 100px;

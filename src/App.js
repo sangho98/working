@@ -12,6 +12,10 @@ import UserInfo from "./screens/UserInfo";
 import WriteForm from "./screens/WriteForm";
 import Content from "./screens/Content";
 import FreeBoard from "./screens/FreeBoard";
+import AdvertiseBoard from "./screens/advertiseboard";
+import MatchingBoard from "./screens/matchingboard";
+import InfoBoard from "./screens/infoboard";
+import HotBoard from "./screens/hotboard";
 import Letter from "./screens/Letter";
 import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -45,6 +49,41 @@ function App() {
               exact
             />
             <Route
+              path="/post/freeboard"
+              component={(props) => {
+                return <FreeBoard {...props}></FreeBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/matchingboard"
+              component={(props) => {
+                return <MatchingBoard {...props}></MatchingBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/advertiseboard"
+              component={(props) => {
+                return <AdvertiseBoard {...props}></AdvertiseBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/infoboard"
+              component={(props) => {
+                return <InfoBoard {...props}></InfoBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
+              path="/post/hotboard"
+              component={(props) => {
+                return <HotBoard {...props}></HotBoard>;
+              }}
+              exact
+            ></Route>
+            <Route
               path="/post/:category/writeform"
               component={(props) => {
                 return <WriteForm {...props}></WriteForm>;
@@ -52,21 +91,15 @@ function App() {
               exact
             ></Route>
             <Route
-              path="/post/freeboard/:num"
+              path="/post/:boardlist/:num"
               component={(props) => {
                 return <Content {...props}></Content>;
               }}
               exact
             ></Route>
+
             <Route
-              path="/post/:boardname"
-              component={(props) => {
-                return <FreeBoard {...props}></FreeBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/freeboard/letter/:num"
+              path="/post/:boardlist/letter/:num"
               component={(props) => {
                 return <Letter {...props}></Letter>;
               }}

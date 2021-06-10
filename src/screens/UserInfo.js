@@ -58,22 +58,14 @@ function UserInfo(props) {
             <Form.Row>
               <Form.Group as={Col} controlId="formPlaintextEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control
-                  plaintext
-                  readOnly
-                  defaultValue={udata() && udata().email}
-                />
+                <p>{udata() && udata().email}</p>
               </Form.Group>
               <Form.Group as={Col}>
                 <Form.Label>이름</Form.Label>
-                <Form.Control
-                  plaintext
-                  readOnly
-                  defaultValue={udata() && udata().username}
-                />
+                <p>{udata() && udata().username}</p>
               </Form.Group>
               <Form.Group as={Col}>
-                <Form.Label>닉네임</Form.Label>
+                <Form.Label>현재 닉네임</Form.Label>
                 <Form.Control
                   placeholder={`현재 닉네임 : ${udata() && udata().nickname}`}
                   onChange={onChangeNewNickname}
@@ -108,11 +100,7 @@ function UserInfo(props) {
                 >
                   학교
                 </Form.Label>
-                <Form.Control
-                  plaintext
-                  readOnly
-                  defaultValue={`${udata().schoolname}`}
-                />
+                <p>{udata().schoolname}</p>
               </Form.Group>
               <Form.Group as={Col}>
                 <Form.Label
@@ -121,11 +109,7 @@ function UserInfo(props) {
                 >
                   학년
                 </Form.Label>
-                <Form.Control
-                  plaintext
-                  readOnly
-                  defaultValue={`${udata().grade}`}
-                />
+                <p>{udata().grade}</p>
               </Form.Group>
               <Form.Group as={Col}>
                 <Form.Label
@@ -134,15 +118,11 @@ function UserInfo(props) {
                 >
                   반
                 </Form.Label>
-                <Form.Control
-                  plaintext
-                  readOnly
-                  defaultValue={`${udata().classnum}`}
-                />
+                <p>{udata().classnum}</p>
               </Form.Group>
             </Form.Row>
 
-            <Form.Row as={Col}>
+            <Form.Row className="justify-content-md-center">
               <Button
                 variant="primary"
                 type="submit"
@@ -150,8 +130,9 @@ function UserInfo(props) {
                   handleSubmit(e);
                 }}
                 ref={target}
+                style={{ width: "100%" }}
               >
-                Submit
+                회원정보 변경
               </Button>
               <Overlay target={target.current} show={error} placement="right">
                 {(props) => (

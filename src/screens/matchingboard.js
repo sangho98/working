@@ -23,7 +23,7 @@ import Alert from "react-bootstrap/Alert";
 import { Jumbotron } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
 
-class FreeBoard extends React.Component {
+class matchingboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,9 @@ class FreeBoard extends React.Component {
       axios.defaults.headers.common["Authorization"] = token;
 
       axios
-        .get(SERVER_URL + "/post/freeboard?page=" + (this.state.page_count - 1))
+        .get(
+          SERVER_URL + "/post/matchingboard?page=" + (this.state.page_count - 1)
+        )
         .then(({ data }) => {
           console.log(data);
           this.setState({
@@ -57,7 +59,9 @@ class FreeBoard extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
 
     axios
-      .get(SERVER_URL + "/post/freeboard?page=" + (this.state.page_count + 1))
+      .get(
+        SERVER_URL + "/post/matchingboard?page=" + (this.state.page_count + 1)
+      )
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -74,7 +78,7 @@ class FreeBoard extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
 
     axios
-      .get(SERVER_URL + "/post/freeboard?page=" + this.state.page_count)
+      .get(SERVER_URL + "/post/matchingboard?page=" + this.state.page_count)
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -119,7 +123,7 @@ class FreeBoard extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
 
     axios
-      .delete(SERVER_URL + `/post/freeboard/${id}`)
+      .delete(SERVER_URL + `/post/matchingboard/${id}`)
       .then((res) => {
         if (res.data === "failed") {
           alert("내가 쓴 글이 아닙니다.");
@@ -136,14 +140,14 @@ class FreeBoard extends React.Component {
   render() {
     return (
       <div>
-        <h2 className="text-center">자유게시판</h2>
+        <h2 className="text-center">매칭게시판</h2>
         <div className="row">
           <table className="FreeTable">
             <thead></thead>
             <tbody>
               {this.state.boards.map((board) => (
                 <tr key={board.id} id="content_content">
-                  <Link to={`/post/freeboard/${board.id}`}>
+                  <Link to={`/post/matchingboard/${board.id}`}>
                     <td id="content_title">{board.title}</td>
                   </Link>
                   <button
@@ -170,7 +174,7 @@ class FreeBoard extends React.Component {
             <button onClick={this.movenextPage}>&gt;</button>
           </div>
         </nav>
-        <Link to="/post/freeboard/writeform">
+        <Link to="/post/matchingboard/writeform">
           <button className="writebutton">글쓰기</button>
         </Link>
       </div>
@@ -178,4 +182,4 @@ class FreeBoard extends React.Component {
   }
 }
 
-export default withRouter(FreeBoard);
+export default withRouter(matchingboard);

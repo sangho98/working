@@ -8,6 +8,7 @@ function Dinner(props) {
   useEffect(() => {
     if (!dinnerlist) GetDinnerList({ setdinnerlist: setdinnerlist });
   }, [dinnerlist]);
+  console.log(dinnerlist);
 
   if (dinnerlist) {
     let i = -1;
@@ -30,6 +31,7 @@ function Dinner(props) {
             } else if (i === -1) {
               i = 0;
             }
+            console.log(i);
 
             return (
               <tr key={i} style={{ textAlign: "center" }}>

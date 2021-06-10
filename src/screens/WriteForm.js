@@ -12,6 +12,7 @@ class WriteForm extends React.Component {
       multipartFileList: null,
       title: "",
       content: "",
+      wharboard: this.props.match.params.category,
     };
     this.updatedata = this.updatedata.bind(this);
     this.updatetext = this.updatetext.bind(this);
@@ -37,14 +38,14 @@ class WriteForm extends React.Component {
     let token = localStorage.getItem("TOKEN");
     axios.defaults.headers.common["Authorization"] = token;
     const frm = new FormData();
-    const { params } = this.props.match;
+
     console.log(this.state.Title);
     frm.append("title", this.state.title);
     frm.append("content", this.state.content);
     if (this.state.multipartFileList === null) {
     } else frm.append("multipartFileList", this.state.multipartFileList);
     axios
-      .post(SERVER_URL + "/post/freeboard" /*+ params.category*/, frm, {
+      .post(SERVER_URL + `/post/${this.state.wharboard}`, frm, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

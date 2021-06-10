@@ -17,10 +17,7 @@ import Dinner from "./Dinner";
 import Message from "./Message";
 import Schedule from "./Schedule";
 
-const Headalign = styled.div`
-  width: 100%;
-  height: 60px;
-`;
+const Headalign = styled.div``;
 
 const MessageShow = (props) => {
   const { setmodalshow, typemodal, settypemodal, prop } = props;
@@ -102,7 +99,8 @@ const MessageShow = (props) => {
           >
             Next
           </Button>
-        ) : (
+        ) : null}
+        {typemodal === "2" ? (
           <Button
             onClick={() => {
               settypemodal("6");
@@ -110,7 +108,7 @@ const MessageShow = (props) => {
           >
             답장
           </Button>
-        )}
+        ) : null}
 
         <Button
           onClick={() => {
@@ -150,13 +148,12 @@ function Header(props) {
           prop={props}
         ></MessageShow>
 
-        <Navbar bg="secondary" variant="dark" style={{ height: "60px" }}>
+        <Navbar bg="primary" variant="dark" style={{ height: "60px" }}>
           <Link to="/">
             <Navbar.Brand>HighSchool Time</Navbar.Brand>
           </Link>
-          <Nav className="mr-auto"></Nav>
 
-          <Nav>
+          <Nav className="justify-content-end">
             <FontAwesomeIcon
               icon={faCalendarAlt}
               style={{ paddingRight: "13px" }}

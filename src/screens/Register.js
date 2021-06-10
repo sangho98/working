@@ -20,8 +20,6 @@ import {
 import { Link } from "react-router-dom";
 
 function Register(props) {
-  const [emailFront, setEmailFront] = useState(null);
-  const [emailBack, setEmailBack] = useState(null);
   const [emailFull, setEmailFull] = useState(null);
 
   const [password, setPassword] = useState(null);
@@ -44,10 +42,6 @@ function Register(props) {
   const target3 = useRef(null);
   const target4 = useRef(null);
 
-  useEffect(() => {
-    setEmailFull(`${emailFront}@${emailBack}`);
-  }, [emailFront, emailBack]);
-
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
   };
@@ -56,12 +50,8 @@ function Register(props) {
     setNickname(e.target.value);
   };
 
-  const onChangeEmailFront = (e) => {
-    setEmailFront(e.target.value);
-  };
-
-  const onChangeEmailBack = (e) => {
-    setEmailBack(e.target.value);
+  const onChangeEmail = (e) => {
+    setEmailFull(e.target.value);
   };
 
   const onChangePassword = (e) => {
@@ -70,7 +60,6 @@ function Register(props) {
 
   const onChangeEducationCenter = (e) => {
     seteducationcenter(e.target.value);
-    console.log(educationcenter);
   };
   const onChangeSchoolname = (e) => {
     setschoolname(e.target.value);
@@ -90,7 +79,14 @@ function Register(props) {
   };
 
   return (
-    <Container style={{ height: "600px" }} fluid>
+    <Container
+      style={{
+        height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      fluid
+    >
       <Row style={{ marginTop: "3rem" }} className="justify-content-md-center">
         <Col md="auto">
           <Link to="/">
@@ -101,14 +97,14 @@ function Register(props) {
       <Row className="justify-content-md-center">
         <Form style={{ width: "33%" }}>
           <Form.Row>
-            <Col md={4}>
+            <Col md={5}>
               <Form.Control
                 type="text"
                 placeholder="이름"
                 onChange={onChangeUsername}
               />
             </Col>
-            <Col md={5}>
+            <Col md={4}>
               <Form.Control
                 type="text"
                 placeholder="닉네임"
@@ -143,28 +139,13 @@ function Register(props) {
             </Col>
           </Form.Row>
           <Form.Row style={{ marginTop: "0.5rem" }}>
-            <Col md={4}>
-              <Form.Label htmlFor="inlineFormInput" srOnly>
-                Name
-              </Form.Label>
+            <Col>
               <Form.Control
                 className="mb-2"
                 id="inlineFormInput"
-                placeholder="example"
-                onChange={onChangeEmailFront}
+                placeholder="example@naver.com"
+                onChange={onChangeEmail}
               />
-            </Col>
-            <Col md={5}>
-              <InputGroup className="mb-2">
-                <InputGroup.Prepend>
-                  <InputGroup.Text>@</InputGroup.Text>
-                </InputGroup.Prepend>
-                <FormControl
-                  id="inlineFormInputGroup"
-                  placeholder="example.com"
-                  onChange={onChangeEmailBack}
-                />
-              </InputGroup>
             </Col>
 
             <Col md={3}>
@@ -250,7 +231,7 @@ function Register(props) {
                 }}
                 ref={target4}
               >
-                지역 검증
+                지역 인증
               </Button>
               <Overlay target={target.current} show={!reg} placement="right">
                 {(props) => (
@@ -283,7 +264,7 @@ function Register(props) {
                 }}
                 ref={target3}
               >
-                학교 검증
+                학교 인증
               </Button>
               <Overlay target={target.current} show={!reg} placement="right">
                 {(props) => (
@@ -297,6 +278,7 @@ function Register(props) {
           </Form.Row>
           <Form.Row style={{ marginTop: "0.5rem" }}>
             <Col md={9}>
+              <Form.Label>학년</Form.Label>
               <Form.Control
                 as="select"
                 defaultValue="Choose..."
@@ -308,14 +290,12 @@ function Register(props) {
                 <option>3학년</option>
               </Form.Control>
             </Col>
-            <Col md={2}>
+            <Col md={3}>
+              <Form.Label>반 입력 (숫자만)</Form.Label>
               <Form.Control type="text" onChange={onChangeClassNum} />
             </Col>
-            <Col>
-              <Form.Control plaintext readOnly defaultValue="반" />
-            </Col>
           </Form.Row>
-          <Form.Row style={{ marginTop: "0.3rem" }}>
+          <Form.Row style={{ marginTop: "0.7rem" }}>
             <Col>
               <Button
                 type="button"
@@ -340,23 +320,11 @@ function Register(props) {
                     return;
                   }
 
-                  console.log(emailFull);
-                  console.log(password);
-                  console.log(username);
-                  console.log(nickname);
-                  console.log(educationcenter);
-                  console.log(grade);
-                  console.log(classnum);
-                  console.log(schoolname);
-                  console.log(schoolcode);
-
                   if (
-                    emailFront === null ||
-                    emailBack === null ||
+                    emailFull === null ||
                     password === null ||
                     username === null ||
                     educationcenter === null ||
-                    educationcenter === "지역 선택" ||
                     grade === null ||
                     grade === "학년 선택" ||
                     classnum === null ||
@@ -376,7 +344,6 @@ function Register(props) {
                     classnum: classnum,
                     schoolcode: schoolcode,
                   };
-                  console.log(`regData : ${regData}`);
 
                   PostRegister({ data: regData, setResResult: setResResult });
 

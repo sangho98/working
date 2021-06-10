@@ -8,6 +8,7 @@ import { Container, Row, Col, Modal } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
 import { getOperationDefinition } from "@apollo/client/utilities";
 import Letter from "./Letter";
+import { Modals } from "react-bootstrap";
 
 class Content extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class Content extends React.Component {
       boards: [],
       comment: [],
       writeco: "",
+      ModalOn: false,
+      abc: false,
     };
   }
 
@@ -27,7 +30,7 @@ class Content extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
     const { params } = this.props.match;
     axios
-      .get(SERVER_URL + "/post/freeboard/" + params.num)
+      .get(SERVER_URL + "/post/" + params.boardlist + "/" + params.num)
       .then(({ data }) => {
         this.setState({
           boards: data,
@@ -52,8 +55,8 @@ class Content extends React.Component {
         if (res.data === "failed") {
         } else {
           alert("댓글 작성 완료");
-          console.log(this.props.location.pathname);
-          <Redirect to="this.props.location.pathname" />;
+          this.setState({ abc: true });
+          this.props.history.push(this.props.location.pathname);
         }
       })
       .catch((err) => {
@@ -80,6 +83,23 @@ class Content extends React.Component {
       });
   };
 
+  Friendplz = async ({ id }) => {
+    let token = localStorage.getItem("TOKEN");
+    axios.defaults.headers.common["Authorization"] = token;
+    axios
+      .get(SERVER_URL + `/user/${id}`)
+      .then((res) => {
+        if (res.data === "failed") {
+          alert("요청실패");
+        } else {
+          alert("요청완료");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
     this.LoadContent();
   }
@@ -90,9 +110,16 @@ class Content extends React.Component {
     });
   };
 
-  getOption() {
-    <Letter />;
-  }
+  openModal = () => {
+    this.setState({
+      ModalOn: true,
+    });
+  };
+  closeModal = () => {
+    this.setState({
+      ModalOn: false,
+    });
+  };
   DeleteBoard = async ({ id }) => {
     let token = localStorage.getItem("TOKEN");
     axios.defaults.headers.common["Authorization"] = token;
@@ -110,6 +137,13 @@ class Content extends React.Component {
         console.log(err);
       });
   };
+  gotoLetter() {}
+  componentDidUpdate() {
+    if (this.state.abc) {
+      this.LoadContent();
+      this.setState({ abc: false });
+    }
+  }
   render() {
     function comment_id(id) {
       if (id === -1) return "글쓴이";
@@ -128,6 +162,7 @@ class Content extends React.Component {
             ♡
           </button>
           <li id="content_content">{this.state.boards.content}</li>
+          <li id="content_img"></li>
         </div>
 
         <div className="write_reply">
@@ -140,9 +175,30 @@ class Content extends React.Component {
             <tr key={board.id} id="content_content">
               <tr>
                 <td className="comment_user">
-                  <Link to={`/post/freeboard/letter/${board.userId}`}>
+                  <button onClick={this.openModal}>
                     {comment_id(board.userCount)}
-                  </Link>
+                  </button>
+                  <Modal show={this.state.ModalOn} onHide={this.closeModal}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>원하는 활동을 선택하세요.</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Footer>
+                      <Link to={`/post/freeboard/letter/${board.userId}`}>
+                        <button variant="secondary" onClick={this.closeModal}>
+                          쪽지보내기
+                        </button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          console.log(board.userId);
+                          this.Friendplz({ id: board.userId });
+                        }}
+                      >
+                        친구 요청
+                      </button>
+                    </Modal.Footer>
+                  </Modal>
                 </td>
               </tr>
               <tr>
@@ -165,3 +221,4 @@ class Content extends React.Component {
 }
 
 export default withRouter(Content);
+//<Link to={`/post/freeboard/letter/${board.userId}`}></Link>

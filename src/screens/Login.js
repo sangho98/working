@@ -63,7 +63,7 @@ function Login(props) {
   return (
     <Container
       className="justify-content-center align-self-center"
-      style={{ height: "600px" }}
+      style={{ height: "100vh" }}
     >
       <Row
         className="justify-content-md-center "

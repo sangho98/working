@@ -156,7 +156,7 @@ const ControlledTabs = (props) => {
         <Col sm={3}>
           <Alert variant="dark">
             <Alert.Heading>업데이트 중..</Alert.Heading>
-            <p>2021-06-03 메인페이지 작업 완료</p>
+            <p>2021-06-11 메인페이지 작업 완료</p>
             <hr />
             <p className="mb-0">추가 기능 구현중..</p>
           </Alert>
@@ -201,10 +201,11 @@ const ControlledUserInfo = (props) => {
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroupItem>
-            <Card.Link href="#">내가 쓴 글</Card.Link>
+            학교 : {udata() ? udata().schoolname : "Null"}
           </ListGroupItem>
           <ListGroupItem>
-            <Card.Link href="#">댓글 단 글</Card.Link>
+            {udata() ? udata().grade : "Null"}학년{" "}
+            {udata() ? udata().classnum : "Null"}반
           </ListGroupItem>
         </ListGroup>
       </Card>
@@ -226,31 +227,34 @@ function Main(props) {
   console.log("render");
   return (
     <Container fluid>
-      <Col md={12} style={{ marginTop: "1.5rem" }}>
-        <Row>
-          <Col md={9}>
-            <Jumbotron>
-              <h1>HighSchool Time 공사중..</h1>
-              <p>팀명 : 배추추</p>
-              <p>팀원 : 배서현, 박상호, 황선형</p>
-              <p>
-                <Link to="/notice">
-                  <Button variant="primary">공지사항 확인</Button>
-                </Link>
-              </p>
-            </Jumbotron>
-          </Col>
-          <Col md={3}>
-            <ControlledUserInfo userData={udata()} prop={props} />
-          </Col>
-        </Row>
+      <Row style={{ marginTop: "2rem" }}>
+        <Col md={{ offset: 0, span: 9 }}>
+          <Jumbotron>
+            <h1>HighSchool Time 공사중..</h1>
+            <p>팀명 : 배추추</p>
+            <p>팀원 : 배서현, 박상호, 황선형</p>
+            <p>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  window.alert("낚시~");
+                }}
+              >
+                공지사항 확인
+              </Button>
+            </p>
+          </Jumbotron>
+        </Col>
+        <Col>
+          <ControlledUserInfo userData={udata()} prop={props} />
+        </Col>
+      </Row>
 
-        <Row style={{ marginTop: "1.5rem" }}>
-          <Container style={{ height: "300px" }} fluid>
-            <ControlledTabs props={props} article={article} />
-          </Container>
-        </Row>
-      </Col>
+      <Row style={{ marginTop: "1.5rem" }}>
+        <Container style={{ height: "300px" }} fluid>
+          <ControlledTabs props={props} article={article} />
+        </Container>
+      </Row>
     </Container>
   );
 }

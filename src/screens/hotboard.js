@@ -23,7 +23,7 @@ import Alert from "react-bootstrap/Alert";
 import { Jumbotron } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
 
-class FreeBoard extends React.Component {
+class hotboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +39,7 @@ class FreeBoard extends React.Component {
       axios.defaults.headers.common["Authorization"] = token;
 
       axios
-        .get(SERVER_URL + "/post/freeboard?page=" + (this.state.page_count - 1))
+        .get(SERVER_URL + "/post/hotboard?page=" + (this.state.page_count - 1))
         .then(({ data }) => {
           console.log(data);
           this.setState({
@@ -57,7 +57,7 @@ class FreeBoard extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
 
     axios
-      .get(SERVER_URL + "/post/freeboard?page=" + (this.state.page_count + 1))
+      .get(SERVER_URL + "/post/hotboard?page=" + (this.state.page_count + 1))
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -74,7 +74,7 @@ class FreeBoard extends React.Component {
     axios.defaults.headers.common["Authorization"] = token;
 
     axios
-      .get(SERVER_URL + "/post/freeboard?page=" + this.state.page_count)
+      .get(SERVER_URL + "/post/hotboard?page=" + this.state.page_count)
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -114,45 +114,19 @@ class FreeBoard extends React.Component {
     this.LoadBoard();
   }
 
-  DeleteBoard = async ({ id }) => {
-    let token = localStorage.getItem("TOKEN");
-    axios.defaults.headers.common["Authorization"] = token;
-
-    axios
-      .delete(SERVER_URL + `/post/freeboard/${id}`)
-      .then((res) => {
-        if (res.data === "failed") {
-          alert("내가 쓴 글이 아닙니다.");
-        } else {
-          alert("삭제 완료");
-          <Redirect to="this.props.location.pathname" />;
-        }
-      })
-      .catch((err) => {
-        alert("내가 쓴 글이 아닙니다.");
-        console.log(err);
-      });
-  };
   render() {
     return (
       <div>
-        <h2 className="text-center">자유게시판</h2>
+        <h2 className="text-center">HOT게시판</h2>
         <div className="row">
           <table className="FreeTable">
             <thead></thead>
             <tbody>
               {this.state.boards.map((board) => (
                 <tr key={board.id} id="content_content">
-                  <Link to={`/post/freeboard/${board.id}`}>
+                  <Link to={`/post/hotboard/${board.id}`}>
                     <td id="content_title">{board.title}</td>
                   </Link>
-                  <button
-                    onClick={() => {
-                      this.DeleteBoard({ id: board.id });
-                    }}
-                  >
-                    삭제
-                  </button>
                   <tr>
                     <td id="content_text">{board.content}</td>
                   </tr>
@@ -170,12 +144,9 @@ class FreeBoard extends React.Component {
             <button onClick={this.movenextPage}>&gt;</button>
           </div>
         </nav>
-        <Link to="/post/freeboard/writeform">
-          <button className="writebutton">글쓰기</button>
-        </Link>
       </div>
     );
   }
 }
 
-export default withRouter(FreeBoard);
+export default withRouter(hotboard);

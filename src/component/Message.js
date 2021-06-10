@@ -197,9 +197,7 @@ function Message(props) {
       });
     }
   }, [message, sendmessage, pageNum]);
-  console.log(pageNum);
-  console.log(sendmessage);
-  console.log(message);
+
   if (nullm) {
     console.log("here");
     return (
