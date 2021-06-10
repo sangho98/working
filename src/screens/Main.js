@@ -47,10 +47,14 @@ const ListArticle = (props) => {
 };
 
 const ControlledTabs = (props) => {
-  const [show, setShow] = React.useState(true);
-  const { article } = props;
+  const [show, setShow] = useState(null);
+  const [article, setarticle] = useState(null);
 
-  console.log(article);
+  useEffect(() => {
+    if (tokenData() && show) {
+      GetArticle({ setarticle: setarticle, show: show });
+    }
+  }, [show]);
 
   return (
     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -217,11 +221,8 @@ function Main(props) {
   useEffect(() => {
     if (tokenData()) {
       GetUserInfo();
-      GetArticle({ setArticle: setArticle });
     }
-  }, [udata]);
-
-  console.log(article);
+  }, [udata()]);
 
   return (
     <Container fluid>

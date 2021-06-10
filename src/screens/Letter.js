@@ -36,7 +36,7 @@ class Letter extends React.Component {
     let token = localStorage.getItem("TOKEN");
     axios.defaults.headers.common["Authorization"] = token;
     axios
-      .post(SERVER_URL + "/message/1" + `${this.state.ToID}`, {
+      .post(SERVER_URL + "/message/" + `${this.state.ToID}`, {
         content: this.state.content,
       })
       .then((res) => {

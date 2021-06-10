@@ -37,6 +37,29 @@ export const GetMessage = async (props) => {
     });
 };
 
+export const GetSendMessage = async (props) => {
+  const { setsendmessage, setsnullm } = props;
+
+  await axios
+    .get(SERVER_URL + "/message/sent", {
+      headers: {
+        Authorization: tokenData(),
+      },
+    })
+    .then((res) => {
+      if (res.data.length === 0) {
+        console.log("No Message");
+        setsnullm(true);
+      } else {
+        console.log("Yes sendMessage");
+        setsendmessage(res);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const SendMessage = (props) => {
   const { data, email } = props;
   axios
@@ -50,16 +73,16 @@ export const SendMessage = (props) => {
 };
 
 export const GetArticle = async (props) => {
-  const { setArticle } = props;
+  const { setarticle, show } = props;
 
   await axios
-    .get(SERVER_URL + "/post/freeboard", {
+    .get(SERVER_URL + `/post/${show}`, {
       headers: {
         Authorization: tokenData(),
       },
     })
     .then((res) => {
-      setArticle(res.data);
+      setarticle(res.data);
       console.log(res.data);
     })
     .catch((err) => {
@@ -86,7 +109,7 @@ export const GetUserInfo = async (props) => {
 };
 
 export const PutUserInfo = (props) => {
-  const { nickname, password } = props;
+  const { nickname, password, seterror } = props;
 
   axios
     .put(SERVER_URL + "/user", {
@@ -99,9 +122,11 @@ export const PutUserInfo = (props) => {
     })
     .then((res) => {
       console.log(res);
+      seterror(false);
     })
     .catch((err) => {
       console.log(err);
+      seterror(true);
     });
 };
 

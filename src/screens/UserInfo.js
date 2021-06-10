@@ -1,5 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  Container,
+  Overlay,
+  Tooltip,
+  Row,
+  Col,
+  Form,
+  Button,
+} from "react-bootstrap";
 import { tokenData, udata } from "../Apollo";
 import { PutUserInfo } from "../utils/ApiConfig";
 
@@ -7,6 +15,10 @@ function UserInfo(props) {
   const [newNickname, setNewNickname] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
   const [prevPassword, setPrevPassword] = useState(null);
+
+  const [error, seterror] = useState(false);
+
+  const target = useRef(null);
 
   const onChangePrevPassword = (e) => {
     setPrevPassword(e.target.value);
@@ -26,6 +38,7 @@ function UserInfo(props) {
     PutUserInfo({
       nickname: newNickname,
       password: newPassword,
+      seterror: seterror,
     });
   };
 
@@ -136,9 +149,20 @@ function UserInfo(props) {
                 onClick={(e) => {
                   handleSubmit(e);
                 }}
+                ref={target}
               >
                 Submit
               </Button>
+              <Overlay target={target.current} show={error} placement="right">
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    정보 수정 실패!<br></br>
+                    <strong>비밀번호</strong> 또는 <strong>닉네임</strong>를
+                    <br />
+                    확인해주세요.
+                  </Tooltip>
+                )}
+              </Overlay>
             </Form.Row>
           </Form>
         </Col>

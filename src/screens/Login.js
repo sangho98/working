@@ -38,11 +38,15 @@ function Login(props) {
     axios
       .post(SERVER_URL + "/login", data)
       .then((res) => {
-        localStorage.setItem("TOKEN", `Bearer ${res.data}`);
-        setLoginError(false);
-        tokenData(localStorage.getItem("TOKEN"));
-        logged(true);
-        props.history.push("/");
+        if (res.data === "failed") {
+          setLoginError(true);
+        } else {
+          localStorage.setItem("TOKEN", `Bearer ${res.data}`);
+          setLoginError(false);
+          tokenData(localStorage.getItem("TOKEN"));
+          logged(true);
+          props.history.push("/");
+        }
       })
       .catch((err) => {
         console.log(err);
