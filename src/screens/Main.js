@@ -14,6 +14,7 @@ import {
   Jumbotron,
   Table,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 
 import { GetArticle, GetUserInfo } from "../utils/ApiConfig";
@@ -22,8 +23,6 @@ import { tokenData, udata } from "../Apollo";
 
 const ListArticle = (props) => {
   const { data } = props;
-
-  console.log(data);
 
   return (
     <Table bordered hover>
@@ -169,7 +168,8 @@ const ControlledTabs = (props) => {
 
 const ControlledUserInfo = (props) => {
   const { userData, prop } = props;
-
+  console.log(udata());
+  console.log("Heelo");
   return (
     <Container>
       <Card style={{ width: "100%" }} className="text-center">
@@ -182,8 +182,8 @@ const ControlledUserInfo = (props) => {
         />
 
         <Card.Body>
-          <Card.Title>{userData ? userData.nickname : "Null"}</Card.Title>
-          <Card.Text>{userData ? userData.username : "Null"}</Card.Text>
+          <Card.Title>{udata() ? udata().nickname : "Null"}</Card.Title>
+          <Card.Text>{udata() ? udata().username : "Null"}</Card.Text>
           <Link to="/user">
             <Button style={{ margin: "10px" }}>내 정보</Button>
           </Link>
@@ -214,16 +214,16 @@ const ControlledUserInfo = (props) => {
 
 function Main(props) {
   const [article, setArticle] = useState(null);
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
     if (!tokenData()) props.history.push("/login");
   });
   useEffect(() => {
-    if (tokenData()) {
-      GetUserInfo();
-    }
-  }, [udata()]);
+    GetUserInfo({ setloading: setloading });
+  }, [loading]);
 
+  console.log("render");
   return (
     <Container fluid>
       <Col md={12} style={{ marginTop: "1.5rem" }}>

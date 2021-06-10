@@ -92,7 +92,9 @@ const MessageShow = (props) => {
           >
             Next
           </Button>
-        ) : null}
+        ) : (
+          <Button>삭제</Button>
+        )}
 
         <Button
           onClick={() => {

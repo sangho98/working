@@ -92,6 +92,7 @@ export const GetArticle = async (props) => {
 };
 
 export const GetUserInfo = async (props) => {
+  const { setloading } = props;
   await axios
     .get(SERVER_URL + "/user", {
       headers: {
@@ -99,9 +100,8 @@ export const GetUserInfo = async (props) => {
       },
     })
     .then((res) => {
-      console.log(res);
       udata(res.data);
-      console.log(res.data);
+      setloading(true);
     })
     .catch((err) => {
       console.log(err);

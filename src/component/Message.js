@@ -20,7 +20,7 @@ const ListMessage = (props) => {
           <thead>
             <tr>
               <th style={{ textAlign: "center" }}>보낸 사람</th>
-              <th style={{ width: "85%", textAlign: "center" }}>제목</th>
+              <th style={{ width: "85%", textAlign: "center" }}>내용</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +49,7 @@ const ListMessage = (props) => {
           <thead>
             <tr>
               <th style={{ textAlign: "center" }}>받는 사람</th>
-              <th style={{ width: "85%", textAlign: "center" }}>제목</th>
+              <th style={{ width: "85%", textAlign: "center" }}>내용</th>
             </tr>
           </thead>
           <tbody>
@@ -154,7 +154,7 @@ function Message(props) {
               <thead>
                 <tr>
                   <th style={{ textAlign: "center" }}>받는 사람</th>
-                  <th style={{ width: "85%", textAlign: "center" }}>제목</th>
+                  <th style={{ width: "85%", textAlign: "center" }}>내용</th>
                 </tr>
               </thead>
               <tbody>
