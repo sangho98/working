@@ -24,9 +24,11 @@ const Headalign = styled.div`
 
 const MessageShow = (props) => {
   const { setmodalshow, typemodal, settypemodal, prop } = props;
-  const [pageNum, setPageNum] = useState(0);
+  const [pageNum, setPageNum] = useState(1);
   const [pageNumEnd, setPageNumEnd] = useState(5);
   const [messageId, setMessageId] = useState(null);
+  const [tempid, settempid] = useState(null);
+  const [abc, setabc] = useState(false);
 
   return (
     <Modal
@@ -51,7 +53,7 @@ const MessageShow = (props) => {
         )}
       </Modal.Header>
       <Modal.Body>
-        {typemodal === "1" || typemodal === "2" ? (
+        {typemodal === "1" || typemodal === "2" || typemodal === "6" ? (
           <Message
             pageNum={pageNum}
             pageNumEnd={pageNumEnd}
@@ -60,6 +62,10 @@ const MessageShow = (props) => {
             messageId={messageId}
             typemodal={typemodal}
             prop={prop}
+            settempid={settempid}
+            tempid={tempid}
+            setabc={setabc}
+            abc={abc}
           />
         ) : typemodal === "3" ? (
           <Friend prop={prop} />
@@ -74,9 +80,13 @@ const MessageShow = (props) => {
           <Button
             onClick={() => {
               if (pageNum <= 0) {
+                console.log("첫페이지");
               } else {
-                setPageNum(pageNum - 5);
-                setPageNumEnd(pageNumEnd - 5);
+                if (pageNum === 1) {
+                } else {
+                  setPageNum(pageNum - 1);
+                  setabc(true);
+                }
               }
             }}
           >
@@ -86,14 +96,20 @@ const MessageShow = (props) => {
         {typemodal === "1" ? (
           <Button
             onClick={() => {
-              setPageNum(pageNum + 5);
-              setPageNumEnd(pageNumEnd + 5);
+              setPageNum(pageNum + 1);
+              setabc(true);
             }}
           >
             Next
           </Button>
         ) : (
-          <Button>삭제</Button>
+          <Button
+            onClick={() => {
+              settypemodal("6");
+            }}
+          >
+            답장
+          </Button>
         )}
 
         <Button
@@ -124,7 +140,9 @@ function Header(props) {
       <Headalign>
         <MessageShow
           show={modalshow}
-          onHide={() => setmodalshow(false)}
+          onHide={() => {
+            setmodalshow(false);
+          }}
           data={data}
           typemodal={typemodal}
           setmodalshow={setmodalshow}

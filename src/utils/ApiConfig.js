@@ -15,10 +15,10 @@ export const clientset = (axios.defaults.headers.common["Authorization"] =
   localStorage.getItem("TOKEN"));
 
 export const GetMessage = async (props) => {
-  const { setmessage, setnullm } = props;
-
+  const { setmessage, setnullm, pageNum, setabc } = props;
+  console.log(pageNum);
   await axios
-    .get(SERVER_URL + "/message/received", {
+    .get(SERVER_URL + "/message/received?page=" + pageNum, {
       headers: {
         Authorization: tokenData(),
       },
@@ -27,9 +27,11 @@ export const GetMessage = async (props) => {
       if (res.data.length === 0) {
         console.log("No Message");
         setnullm(true);
+        setabc(false);
       } else {
         console.log("Yes Message");
         setmessage(res);
+        setabc(false);
       }
     })
     .catch((err) => {
@@ -53,6 +55,29 @@ export const GetSendMessage = async (props) => {
       } else {
         console.log("Yes sendMessage");
         setsendmessage(res);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const PostSendMessage = async (props) => {
+  const { content, tempid, settypemodal } = props;
+  await axios
+    .post(SERVER_URL + "/message/" + `${tempid}`, {
+      headers: {
+        Authorization: tokenData(),
+      },
+      content: content,
+    })
+    .then((res) => {
+      if (res.data === "failed") {
+      } else {
+        //dfdf
+        settypemodal("1");
+        window.alert("쪽지 전송이 완료되었습니다.");
+        console.log("success!!!!!");
       }
     })
     .catch((err) => {

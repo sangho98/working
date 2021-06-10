@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tabs, Tab } from "react-bootstrap";
+import {
+  Table,
+  Tabs,
+  Tab,
+  Form,
+  Button,
+  Container,
+  Row,
+  Col,
+} from "react-bootstrap";
 import { tokenData } from "../Apollo";
-import { GetMessage, GetSendMessage } from "../utils/ApiConfig";
+import {
+  GetMessage,
+  GetSendMessage,
+  PostSendMessage,
+} from "../utils/ApiConfig";
 
 const ListMessage = (props) => {
   const {
@@ -24,7 +37,7 @@ const ListMessage = (props) => {
             </tr>
           </thead>
           <tbody>
-            {message.data.slice(pageNum, pageNumEnd).map((m) => {
+            {message.data.map((m) => {
               return (
                 <tr key={m.id}>
                   <td style={{ textAlign: "center" }}>{m.fromUserName}</td>
@@ -54,7 +67,7 @@ const ListMessage = (props) => {
           </thead>
           <tbody>
             {sendmessage ? (
-              sendmessage.data.slice(pageNum, pageNumEnd).map((m) => {
+              sendmessage.data.map((m) => {
                 return (
                   <tr key={m.id}>
                     <td style={{ textAlign: "center" }}>{m.toUserName}</td>
@@ -77,12 +90,14 @@ const ListMessage = (props) => {
 };
 
 const MessageDetail = (props) => {
-  const { message, messageId } = props;
+  const { message, messageId, settempid } = props;
+
   return (
     <Table bordered hover>
       <thead>
         {message.data.map((m) => {
           if (m.id === messageId) {
+            settempid(m.fromUserId);
             return (
               <tr key={m.id}>
                 <th style={{ textAlign: "center" }}>보낸 사람</th>
@@ -110,6 +125,44 @@ const MessageDetail = (props) => {
   );
 };
 
+const MessageReply = (props) => {
+  const { message, tempid, settypemodal } = props;
+  const [content, setcontent] = useState(null);
+
+  const onChangeContent = (e) => {
+    setcontent(e.target.value);
+  };
+
+  const onSubmitContent = () => {
+    PostSendMessage({
+      content: content,
+      tempid: tempid,
+      settypemodal: settypemodal,
+    });
+  };
+
+  return (
+    <Container>
+      <Form style={{ width: "100%" }}>
+        <Form.Label>보낼 쪽지</Form.Label>
+        <Form.Control as="textarea" rows={3} onChange={onChangeContent} />
+      </Form>
+
+      <Button
+        onClick={() => {
+          onSubmitContent();
+        }}
+        style={{
+          width: "100%",
+          marginTop: "0.5rem",
+        }}
+      >
+        보내기
+      </Button>
+    </Container>
+  );
+};
+
 function Message(props) {
   const {
     typemodal,
@@ -118,6 +171,10 @@ function Message(props) {
     settypemodal,
     setMessageId,
     messageId,
+    settempid,
+    tempid,
+    abc,
+    setabc,
   } = props;
   const [nullm, setnullm] = useState(false);
   const [snullm, setsnullm] = useState(false);
@@ -125,11 +182,22 @@ function Message(props) {
   const [sendmessage, setsendmessage] = useState(null);
 
   useEffect(() => {
-    if (!message) GetMessage({ setmessage: setmessage, setnullm: setnullm });
-    if (!sendmessage)
-      GetSendMessage({ setsendmessage: setsendmessage, setsnullm: setsnullm });
-  }, [message, sendmessage]);
+    if (!message || !sendmessage || abc) {
+      GetMessage({
+        setmessage: setmessage,
+        setnullm: setnullm,
+        pageNum: pageNum,
+        setabc: setabc,
+      });
 
+      GetSendMessage({
+        setsendmessage: setsendmessage,
+        setsnullm: setsnullm,
+        setabc: setabc,
+      });
+    }
+  }, [message, sendmessage, pageNum]);
+  console.log(pageNum);
   console.log(sendmessage);
   console.log(message);
   if (nullm) {
@@ -158,7 +226,7 @@ function Message(props) {
                 </tr>
               </thead>
               <tbody>
-                {sendmessage.data.slice(pageNum, pageNumEnd).map((m) => {
+                {sendmessage.data.map((m) => {
                   return (
                     <tr key={m.id}>
                       <td style={{ textAlign: "center" }}>{m.toUserName}</td>
@@ -199,7 +267,21 @@ function Message(props) {
         />
       );
     } else if (typemodal === "2") {
-      return <MessageDetail message={message} messageId={messageId} />;
+      return (
+        <MessageDetail
+          message={message}
+          messageId={messageId}
+          settempid={settempid}
+        />
+      );
+    } else if (typemodal === "6") {
+      return (
+        <MessageReply
+          message={message}
+          tempid={tempid}
+          settypemodal={settypemodal}
+        />
+      );
     }
   } else {
     return <div>Back-Server Error!!</div>;
