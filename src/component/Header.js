@@ -17,8 +17,13 @@ import Dinner from "./Dinner";
 import Message from "./Message";
 import Schedule from "./Schedule";
 
-const Headalign = styled.div``;
-
+const Headalign = styled.div`
+  background-color: #03c7f5;
+`;
+const HeaderInner = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+`;
 const MessageShow = (props) => {
   const { setmodalshow, typemodal, settypemodal, prop } = props;
   const [pageNum, setPageNum] = useState(1);
@@ -136,90 +141,81 @@ function Header(props) {
   } else {
     return (
       <Headalign>
-        <MessageShow
-          show={modalshow}
-          onHide={() => {
-            setmodalshow(false);
-          }}
-          data={data}
-          typemodal={typemodal}
-          setmodalshow={setmodalshow}
-          settypemodal={settypemodal}
-          prop={props}
-        ></MessageShow>
-
-        <Navbar bg="primary" variant="dark" style={{ height: "60px" }}>
-          <Link to="/">
-            <Navbar.Brand>HighSchool Time</Navbar.Brand>
-          </Link>
-
-          <Nav className="justify-content-end">
-            <FontAwesomeIcon
-              icon={faCalendarAlt}
-              style={{ paddingRight: "13px" }}
-              color="white"
-              size="2x"
-              onClick={() => {
-                settypemodal("5");
-                setmodalshow(true);
-              }}
-            ></FontAwesomeIcon>
-            <FontAwesomeIcon
-              icon={faUtensils}
-              style={{ paddingRight: "13px" }}
-              color="white"
-              size="2x"
-              onClick={() => {
-                settypemodal("4");
-                setmodalshow(true);
-              }}
-            ></FontAwesomeIcon>
-            <FontAwesomeIcon
-              icon={faUserFriends}
-              style={{ paddingRight: "13px" }}
-              color="white"
-              size="2x"
-              onClick={() => {
-                settypemodal("3");
-                setmodalshow(true);
-              }}
-            ></FontAwesomeIcon>
-
-            <FontAwesomeIcon
-              icon={faCommentDots}
-              style={{ paddingRight: "13px" }}
-              color="white"
-              size="2x"
-              onClick={() => {
-                settypemodal("1");
-                setmodalshow(true);
-              }}
-            ></FontAwesomeIcon>
-
+        <HeaderInner>
+          <MessageShow
+            show={modalshow}
+            onHide={() => {
+              setmodalshow(false);
+            }}
+            data={data}
+            typemodal={typemodal}
+            setmodalshow={setmodalshow}
+            settypemodal={settypemodal}
+            prop={props}
+          ></MessageShow>
+          <Navbar variant="dark" style={{ height: "60px", padding: 0 }}>
             <Link to="/">
+              <Navbar.Brand>HighSchool Time</Navbar.Brand>
+            </Link>
+
+            <Nav className="justify-content-end">
               <FontAwesomeIcon
-                icon={faPowerOff}
+                icon={faUtensils}
                 style={{ paddingRight: "13px" }}
                 color="white"
                 size="2x"
                 onClick={() => {
-                  localStorage.removeItem("TOKEN");
-                  tokenData(null);
-                  <Redirect to="/" />;
+                  settypemodal("4");
+                  setmodalshow(true);
                 }}
               ></FontAwesomeIcon>
-            </Link>
+              <FontAwesomeIcon
+                icon={faUserFriends}
+                style={{ paddingRight: "13px" }}
+                color="white"
+                size="2x"
+                onClick={() => {
+                  settypemodal("3");
+                  setmodalshow(true);
+                }}
+              ></FontAwesomeIcon>
 
-            <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-light">검색</Button>
-            </Form>
-          </Nav>
-        </Navbar>
+              <FontAwesomeIcon
+                icon={faCommentDots}
+                style={{ paddingRight: "13px" }}
+                color="white"
+                size="2x"
+                onClick={() => {
+                  settypemodal("1");
+                  setmodalshow(true);
+                }}
+              ></FontAwesomeIcon>
+
+              <Link to="/">
+                <FontAwesomeIcon
+                  icon={faPowerOff}
+                  style={{ paddingRight: "13px" }}
+                  color="white"
+                  size="2x"
+                  onClick={() => {
+                    localStorage.removeItem("TOKEN");
+                    tokenData(null);
+                    <Redirect to="/" />;
+                  }}
+                ></FontAwesomeIcon>
+              </Link>
+
+              <Form inline>
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                />
+                <Button variant="outline-light">검색</Button>
+              </Form>
+            </Nav>
+          </Navbar>
+        </HeaderInner>
       </Headalign>
     );
   }

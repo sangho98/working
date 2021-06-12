@@ -1,26 +1,8 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import "../Stylefolder/FreeBoard.css";
 import { Link, withRouter, Redirect } from "react-router-dom";
-import { assertValidExecutionArguments } from "graphql/execution/execute";
 import axios from "axios";
-import { LoneSchemaDefinitionRule } from "graphql";
 
-import Tab from "react-bootstrap/Tab";
-import Carousel from "react-bootstrap/Carousel";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import { LinkContainer } from "react-router-bootstrap";
-import { GetArticle, GetUserInfo, SendMessage } from "../utils/ApiConfig";
-import Table from "react-bootstrap/Table";
-import Alert from "react-bootstrap/Alert";
-import { Jumbotron } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
 
 class Letter extends React.Component {

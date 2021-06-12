@@ -16,8 +16,7 @@ function Schedule(props) {
   }, [schedule]);
 
   if (schedule) {
-    let i = -1;
-
+    console.log(schedule);
     return (
       <Table>
         <thead>
@@ -31,8 +30,7 @@ function Schedule(props) {
           </tr>
         </thead>
         <tbody>
-          {schedule.data.hisTimetable[1].row.slice(0, 7).map((m) => {
-            i++;
+          {schedule.data.hisTimetable[1].row.slice(0, 7).map((m, i) => {
             return (
               <tr key={i} style={{ textAlign: "center" }}>
                 <th>{schedule.data.hisTimetable[1].row[i].PERIO}</th>

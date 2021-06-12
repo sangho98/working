@@ -29,129 +29,127 @@ function App() {
   console.log("Heroku Test");
 
   return (
-    <Container fluid>
-      <Router>
-        <Row>
+    <Router>
+      <Row>
+        <Route
+          path="*"
+          component={(props) => {
+            return <Header {...props} />;
+          }}
+        />
+      </Row>
+      <Row>
+        <Switch>
           <Route
-            path="*"
+            path="/"
             component={(props) => {
-              return <Header {...props} />;
+              return <Main {...props} />;
+            }}
+            exact
+          />
+          <Route
+            path="/post/freeboard"
+            component={(props) => {
+              return <FreeBoard {...props}></FreeBoard>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/matchingboard"
+            component={(props) => {
+              return <MatchingBoard {...props}></MatchingBoard>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/advertiseboard"
+            component={(props) => {
+              return <AdvertiseBoard {...props}></AdvertiseBoard>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/infoboard"
+            component={(props) => {
+              return <InfoBoard {...props}></InfoBoard>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/hotboard"
+            component={(props) => {
+              return <HotBoard {...props}></HotBoard>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/:category/writeform"
+            component={(props) => {
+              return <WriteForm {...props}></WriteForm>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/post/:boardlist/:num"
+            component={(props) => {
+              return <Content {...props}></Content>;
+            }}
+            exact
+          ></Route>
+
+          <Route
+            path="/post/:boardlist/letter/:num"
+            component={(props) => {
+              return <Letter {...props}></Letter>;
+            }}
+            exact
+          ></Route>
+          <Route
+            path="/login"
+            component={(props) => {
+              return <Login {...props} />;
             }}
           />
-        </Row>
-        <Row>
-          <Switch>
-            <Route
-              path="/"
-              component={(props) => {
-                return <Main {...props} />;
-              }}
-              exact
-            />
-            <Route
-              path="/post/freeboard"
-              component={(props) => {
-                return <FreeBoard {...props}></FreeBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/matchingboard"
-              component={(props) => {
-                return <MatchingBoard {...props}></MatchingBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/advertiseboard"
-              component={(props) => {
-                return <AdvertiseBoard {...props}></AdvertiseBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/infoboard"
-              component={(props) => {
-                return <InfoBoard {...props}></InfoBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/hotboard"
-              component={(props) => {
-                return <HotBoard {...props}></HotBoard>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/:category/writeform"
-              component={(props) => {
-                return <WriteForm {...props}></WriteForm>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/post/:boardlist/:num"
-              component={(props) => {
-                return <Content {...props}></Content>;
-              }}
-              exact
-            ></Route>
+          <Route
+            path="/logout"
+            component={() => {
+              return <Logout />;
+            }}
+          />
+          <Route
+            path="/register"
+            component={(props) => {
+              return <Register {...props} />;
+            }}
+          />
+          <Route
+            path="/user"
+            component={(props) => {
+              return <UserInfo {...props} />;
+            }}
+          />
+          <Route
+            path="/auth"
+            component={(props) => {
+              return <Auth {...props} />;
+            }}
+          ></Route>
+          <Route
+            path="/confirm-email"
+            component={(props) => {
+              return <Confirm {...props} />;
+            }}
+          ></Route>
 
-            <Route
-              path="/post/:boardlist/letter/:num"
-              component={(props) => {
-                return <Letter {...props}></Letter>;
-              }}
-              exact
-            ></Route>
-            <Route
-              path="/login"
-              component={(props) => {
-                return <Login {...props} />;
-              }}
-            />
-            <Route
-              path="/logout"
-              component={() => {
-                return <Logout />;
-              }}
-            />
-            <Route
-              path="/register"
-              component={(props) => {
-                return <Register {...props} />;
-              }}
-            />
-            <Route
-              path="/user"
-              component={(props) => {
-                return <UserInfo {...props} />;
-              }}
-            />
-            <Route
-              path="/auth"
-              component={(props) => {
-                return <Auth {...props} />;
-              }}
-            ></Route>
-            <Route
-              path="/confirm-email"
-              component={(props) => {
-                return <Confirm {...props} />;
-              }}
-            ></Route>
-
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
-        </Row>
-        <Row style={{ borderTop: "1px solid gray", marginTop: "2rem" }}>
-          <Footer />
-        </Row>
-      </Router>
-    </Container>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
+      </Row>
+      <Row style={{ borderTop: "1px solid gray", marginTop: "2rem" }}>
+        <Footer />
+      </Row>
+    </Router>
   );
 }
 
