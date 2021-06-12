@@ -30,27 +30,23 @@ function Login(props) {
 
   const onClickLogin = () => {
     const data = {
-      PhoneNum: email,
+      email: email,
       password: password,
     };
     console.log(data);
 
     axios
-      .post("http://localhost:4000" + "/login", data)
+      .post(SERVER_URL + "/login", data)
       .then((res) => {
-        console.log(res);
-        /*
         if (res.data === "failed") {
           setLoginError(true);
         } else {
-          //localStorage.setItem("TOKEN", `Bearer ${res.data}`);
-          //setLoginError(false);
-          //tokenData(localStorage.getItem("TOKEN"));
-          //logged(true);
-          //props.history.push("/");
-          
+          localStorage.setItem("TOKEN", `Bearer ${res.data}`);
+          setLoginError(false);
+          tokenData(localStorage.getItem("TOKEN"));
+          logged(true);
+          props.history.push("/");
         }
-        */
       })
       .catch((err) => {
         console.log(err);
