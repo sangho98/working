@@ -28,7 +28,7 @@ const Subject = styled.div`
 `;
 
 const CardItem = ({ dayOfWeek, day }) => {
-  return (
+  return day ? (
     <CardItemWrapper>
       <DayOfWeek>{dayOfWeek}</DayOfWeek>
       <Subject>{day[0]}</Subject>
@@ -39,68 +39,67 @@ const CardItem = ({ dayOfWeek, day }) => {
       <Subject>{day[5]}</Subject>
       <Subject>{day[6]}</Subject>
     </CardItemWrapper>
-  );
+  ) : null;
 };
 function UserSchedule({ nickname }) {
   const [schedule, setschedule] = useState();
 
-  let schedulemap = new Map();
-  let d = 0;
-
+  const [week, setWeek] = useState([]);
   useEffect(() => {
-    if (!schedule) {
+    if (!schedule || !schedule.data || !schedule.data.hisTimetable) {
       GetTimeList({ setschedule: setschedule });
-    }
-    if (schedule) {
+    } else {
+      if (schedule.data.hisTimetable) {
+        let tempMon = [];
+        let tempTues = [];
+        let tempWen = [];
+        let tempThur = [];
+        let tempFri = [];
+        const rowData = schedule.data.hisTimetable[1].row.slice(0, 7);
+        rowData.map((m, i) => {
+          tempMon = [
+            ...tempMon,
+            schedule.data.hisTimetable[1].row[i].ITRT_CNTNT,
+          ];
+          tempTues = [
+            ...tempTues,
+            schedule.data.hisTimetable[1].row[i + 6].ITRT_CNTNT,
+          ];
+          tempWen = [
+            ...tempWen,
+            schedule.data.hisTimetable[1].row[i + 12].ITRT_CNTNT,
+          ];
+          tempThur = [
+            ...tempThur,
+            schedule.data.hisTimetable[1].row[i + 18].ITRT_CNTNT,
+          ];
+          tempFri = [
+            ...tempFri,
+            schedule.data.hisTimetable[1].row[i + 24].ITRT_CNTNT,
+          ];
+        });
+        setWeek([tempMon, tempTues, tempWen, tempThur, tempFri]);
+      }
     }
   }, [schedule]);
 
-  if (schedule) {
-    let monthDay = [];
-    let tuesDay = [];
-    let wenDay = [];
-    let thurDay = [];
-    let friDay = [];
-    const rowData = schedule.data.hisTimetable[1].row.slice(0, 7);
-    rowData.map((m, i) => {
-      monthDay = [...monthDay, schedule.data.hisTimetable[1].row[i].ITRT_CNTNT];
-      tuesDay = [
-        ...tuesDay,
-        schedule.data.hisTimetable[1].row[i + 6].ITRT_CNTNT,
-      ];
-      wenDay = [
-        ...wenDay,
-        schedule.data.hisTimetable[1].row[i + 12].ITRT_CNTNT,
-      ];
-      thurDay = [
-        ...thurDay,
-        schedule.data.hisTimetable[1].row[i + 18].ITRT_CNTNT,
-      ];
-      friDay = [
-        ...friDay,
-        schedule.data.hisTimetable[1].row[i + 24].ITRT_CNTNT,
-      ];
-    });
-    return (
-      <Wrapper>
-        <div style={{ marginBottom: "20px" }}>
-          <span style={{ fontSize: "20px", fontWeight: "700" }}>
-            {nickname}
-          </span>
-          님의 시간표는?
-        </div>
-        <ScheduleSection>
-          <CardItem dayOfWeek={"월"} day={monthDay}></CardItem>
-          <CardItem dayOfWeek={"화"} day={tuesDay}></CardItem>
-          <CardItem dayOfWeek={"수"} day={wenDay}></CardItem>
-          <CardItem dayOfWeek={"목"} day={thurDay}></CardItem>
-          <CardItem dayOfWeek={"금"} day={friDay}></CardItem>
-        </ScheduleSection>
-      </Wrapper>
-    );
-  } else {
-    return <div>시간표 불러오는중..</div>;
-  }
+  return week ? (
+    <Wrapper>
+      <div style={{ marginBottom: "20px" }}>
+        <span style={{ fontSize: "20px", fontWeight: "700" }}>{nickname}</span>
+        님의 시간표는? 💼
+      </div>
+      <ScheduleSection>
+        <CardItem dayOfWeek={"월"} day={week[0]}></CardItem>
+        <CardItem dayOfWeek={"화"} day={week[1]}></CardItem>
+        <CardItem dayOfWeek={"수"} day={week[2]}></CardItem>
+        <CardItem dayOfWeek={"목"} day={week[3]}></CardItem>
+        <CardItem dayOfWeek={"금"} day={week[4]}></CardItem>
+      </ScheduleSection>
+    </Wrapper>
+  ) : (
+    <div>시간표를 가져오고 있습니다.</div>
+  );
 }
 
 export default UserSchedule;

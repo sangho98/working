@@ -80,6 +80,7 @@ class Friend extends React.Component {
     this.Loadplz();
   }
   render() {
+    console.log(this.state);
     return (
       <div>
         <thead></thead>

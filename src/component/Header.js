@@ -13,9 +13,9 @@ import { useState } from "react";
 import { Button, Modal, FormControl, Form, Nav, Navbar } from "react-bootstrap";
 import { logged, tokenData, udata } from "../Apollo";
 import Friend from "./Friend";
-import Dinner from "./Dinner";
 import Message from "./Message";
 import Schedule from "./Schedule";
+import Dinner from "./Dinner";
 
 const Headalign = styled.div`
   background-color: #03c7f5;
@@ -159,16 +159,6 @@ function Header(props) {
             </Link>
 
             <Nav className="justify-content-end">
-              <FontAwesomeIcon
-                icon={faUtensils}
-                style={{ paddingRight: "13px" }}
-                color="white"
-                size="2x"
-                onClick={() => {
-                  settypemodal("4");
-                  setmodalshow(true);
-                }}
-              ></FontAwesomeIcon>
               <FontAwesomeIcon
                 icon={faUserFriends}
                 style={{ paddingRight: "13px" }}

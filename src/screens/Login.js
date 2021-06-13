@@ -69,9 +69,11 @@ function Login(props) {
         className="justify-content-md-center "
         style={{ marginTop: "10rem" }}
       >
-        <Link to="/">
-          <h1 style={{ marginBottom: "3rem" }}>HighSchool Time</h1>
-        </Link>
+        {/* <Link to="/"> */}
+        <h1 style={{ marginBottom: "3rem", color: "#03c7f5" }}>
+          HighSchool Time
+        </h1>
+        {/* </Link> */}
       </Row>
       <Row className="justify-content-md-center">
         <Col md={5}>
@@ -100,7 +102,11 @@ function Login(props) {
               <Col>
                 <Button
                   type="button"
-                  style={{ width: "100%" }}
+                  style={{
+                    width: "100%",
+                    backgroundColor: "#03c7f5",
+                    border: "none",
+                  }}
                   onClick={() => {
                     onClickLogin();
                   }}
@@ -125,7 +131,12 @@ function Login(props) {
 
                 <Button
                   type="button"
-                  style={{ width: "100%", marginTop: "0.3rem" }}
+                  style={{
+                    width: "100%",
+                    marginTop: "0.3rem",
+                    backgroundColor: "#03c7f5",
+                    border: "none",
+                  }}
                   onClick={() => {
                     props.history.push("/register");
                   }}

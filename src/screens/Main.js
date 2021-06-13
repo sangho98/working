@@ -263,8 +263,6 @@ const LogoutButton = styled.div`
 `;
 const ControlledUserInfo = (props) => {
   const { userData, prop } = props;
-  console.log(udata());
-  console.log("Heelo");
   return (
     <UserInfoWrapper>
       <UserAvatarSection></UserAvatarSection>
@@ -317,7 +315,6 @@ function Main(props) {
     GetUserInfo({ setloading: setloading });
   }, [loading]);
 
-  console.log("render");
   return (
     <Wrapper>
       <MainInner>

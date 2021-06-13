@@ -22,6 +22,64 @@ import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
 import { Jumbotron } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
+import styled from "styled-components";
+export const Wrapper = styled.div`
+  min-height: 100vh;
+`;
+export const BoardInner = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 50px 0;
+`;
+export const BoardTitle = styled.h2`
+  color: #03c7f5;
+`;
+export const BoardList = styled.div`
+  margin: 50px 0;
+`;
+export const BoardItem = styled.div`
+  border: 1px solid #e9e9e9;
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 20px 10px;
+`;
+export const BoardHeader = styled.div`
+  padding: 10px 0;
+  font-size: 20px;
+`;
+export const BoardBody = styled.div`
+  padding: 10px 0;
+  font-size: 17px;
+  color: rgba(0, 0, 0, 0.5);
+`;
+export const BoardFooter = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+export const Pagenation = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const PageButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+export const LinkButton = styled.div`
+  width: 500px;
+  background-color: #03c7f5;
+  margin: 20px auto;
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  &:hover {
+    text-decoration: "none";
+  }
+`;
 
 class FreeBoard extends React.Component {
   constructor(props) {
@@ -32,6 +90,7 @@ class FreeBoard extends React.Component {
     };
     // <Link to = `dwqjqfqf${page}'
   }
+
   prevPage = () => {
     if (this.state.page_count === 1) {
     } else {
@@ -134,46 +193,81 @@ class FreeBoard extends React.Component {
       });
   };
   render() {
+    console.log(this.state.boards);
     return (
-      <div>
-        <h2 className="text-center">자유게시판</h2>
-        <div className="row">
-          <table className="FreeTable">
-            <thead></thead>
-            <tbody>
-              {this.state.boards.map((board) => (
-                <tr key={board.id} id="content_content">
+      <Wrapper>
+        <BoardInner>
+          <BoardTitle>자유게시판</BoardTitle>
+          <BoardList>
+            {this.state.boards.map((board) => (
+              <BoardItem>
+                <BoardHeader>
                   <Link to={`/post/freeboard/${board.id}`}>
-                    <td id="content_title">{board.title}</td>
+                    <span style={{ color: "black", fontWeight: "700" }}>
+                      {board.title}
+                    </span>
                   </Link>
+                </BoardHeader>
+                <BoardBody>{board.content}</BoardBody>
+                <BoardFooter>
+                  <span id="content_like" style={{ fontSize: "20px" }}>
+                    ♥ {board.likecount}
+                  </span>
                   <button
                     onClick={() => {
                       this.DeleteBoard({ id: board.id });
                     }}
+                    style={{
+                      border: "none",
+                      backgroundColor: "white",
+                    }}
                   >
-                    삭제
+                    💬 {board.commentDTOList.length}
                   </button>
-                  <tr>
-                    <td id="content_text">{board.content}</td>
-                  </tr>
-                  <tr></tr>
-                  <td id="content_like">♥ {board.likecount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <nav className="page_nav">
-          <div>
-            <p>{this.state.page_count}</p>
-            <button onClick={this.moveprevPage}>&lt;</button>
-            <button onClick={this.movenextPage}>&gt;</button>
-          </div>
-        </nav>
-        <Link to="/post/freeboard/writeform">
-          <button className="writebutton">글쓰기</button>
-        </Link>
-      </div>
+                </BoardFooter>
+              </BoardItem>
+            ))}
+          </BoardList>
+          <Link to="/post/freeboard/writeform">
+            <LinkButton>글쓰기</LinkButton>
+          </Link>
+          <Pagenation>
+            <button
+              style={{
+                backgroundColor: "#03c7f5",
+                border: "none",
+                color: "white",
+                marginRight: "5px",
+              }}
+              onClick={this.moveprevPage}
+            >
+              &lt;
+            </button>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0",
+              }}
+            >
+              {this.state.page_count}
+            </p>
+
+            <button
+              style={{
+                backgroundColor: "#03c7f5",
+                border: "none",
+                color: "white",
+                marginLeft: "5px",
+              }}
+              onClick={this.movenextPage}
+            >
+              &gt;
+            </button>
+          </Pagenation>
+        </BoardInner>
+      </Wrapper>
     );
   }
 }

@@ -3,11 +3,17 @@ import { Col } from "react-bootstrap";
 
 function Footer() {
   return (
-    <Col>
-      <p style={{ textAlign: "center", margin: "1rem" }}>
-        COPYRIGHT ⓒ 2021 HighteensTime ALL RIGHTS RESERVED. 출처: 배추추
+    <div style={{ borderTop: "1px solid  #e9e9e9" }}>
+      <p
+        style={{
+          textAlign: "center",
+          margin: "1rem",
+          color: "rgba(0,0,0,0.5)",
+        }}
+      >
+        COPYRIGHT ⓒ 2021 HighteensTime ALL RIGHTS RESERVED
       </p>
-    </Col>
+    </div>
   );
 }
 

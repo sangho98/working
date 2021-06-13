@@ -22,6 +22,18 @@ import Table from "react-bootstrap/Table";
 import Alert from "react-bootstrap/Alert";
 import { Jumbotron } from "react-bootstrap";
 import { SERVER_URL } from "../utils/URL";
+import {
+  BoardBody,
+  BoardFooter,
+  BoardHeader,
+  BoardInner,
+  BoardItem,
+  BoardList,
+  BoardTitle,
+  LinkButton,
+  Pagenation,
+  Wrapper,
+} from "./FreeBoard";
 
 class matchingboard extends React.Component {
   constructor(props) {
@@ -139,45 +151,79 @@ class matchingboard extends React.Component {
   };
   render() {
     return (
-      <div>
-        <h2 className="text-center">매칭게시판</h2>
-        <div className="row">
-          <table className="FreeTable">
-            <thead></thead>
-            <tbody>
-              {this.state.boards.map((board) => (
-                <tr key={board.id} id="content_content">
-                  <Link to={`/post/matchingboard/${board.id}`}>
-                    <td id="content_title">{board.title}</td>
+      <Wrapper>
+        <BoardInner>
+          <BoardTitle>매칭게시판</BoardTitle>
+          <BoardList>
+            {this.state.boards.map((board) => (
+              <BoardItem>
+                <BoardHeader>
+                  <Link to={`/post/freeboard/${board.id}`}>
+                    <span style={{ color: "black", fontWeight: "700" }}>
+                      {board.title}
+                    </span>
                   </Link>
+                </BoardHeader>
+                <BoardBody>{board.content}</BoardBody>
+                <BoardFooter>
+                  <span id="content_like" style={{ fontSize: "20px" }}>
+                    ♥ {board.likecount}
+                  </span>
                   <button
                     onClick={() => {
                       this.DeleteBoard({ id: board.id });
                     }}
+                    style={{
+                      border: "none",
+                      backgroundColor: "white",
+                    }}
                   >
-                    삭제
+                    💬 {board.commentDTOList.length}
                   </button>
-                  <tr>
-                    <td id="content_text">{board.content}</td>
-                  </tr>
-                  <tr></tr>
-                  <td id="content_like">♥ {board.likecount}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <nav className="page_nav">
-          <div>
-            <p>{this.state.page_count}</p>
-            <button onClick={this.moveprevPage}>&lt;</button>
-            <button onClick={this.movenextPage}>&gt;</button>
-          </div>
-        </nav>
-        <Link to="/post/matchingboard/writeform">
-          <button className="writebutton">글쓰기</button>
-        </Link>
-      </div>
+                </BoardFooter>
+              </BoardItem>
+            ))}
+          </BoardList>
+          <Link to="/post/freeboard/writeform">
+            <LinkButton>글쓰기</LinkButton>
+          </Link>
+          <Pagenation>
+            <button
+              style={{
+                backgroundColor: "#03c7f5",
+                border: "none",
+                color: "white",
+                marginRight: "5px",
+              }}
+              onClick={this.moveprevPage}
+            >
+              &lt;
+            </button>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0",
+              }}
+            >
+              {this.state.page_count}
+            </p>
+
+            <button
+              style={{
+                backgroundColor: "#03c7f5",
+                border: "none",
+                color: "white",
+                marginLeft: "5px",
+              }}
+              onClick={this.movenextPage}
+            >
+              &gt;
+            </button>
+          </Pagenation>
+        </BoardInner>
+      </Wrapper>
     );
   }
 }

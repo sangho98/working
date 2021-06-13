@@ -1,74 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { GetDinnerList } from "../utils/ApiConfig";
-
+const dinner = [
+  [
+    "통밀밥",
+    "도토리묵무침",
+    "배추김치",
+    "마파두부",
+    "단호박된장국",
+    "수리취떡",
+    "닭봉바베큐오븐구이",
+  ],
+  [
+    "렌틸콩밥",
+    "우동&새우튀김",
+    "달걀장조림",
+    "파래자반",
+    "석박지",
+    "토마토샐러드",
+  ],
+  [
+    "발아현미밥",
+    "건새우아욱된장국",
+    "스파게티",
+    "총각김치",
+    "우리밀카스테라마늘",
+    "러스크",
+    "돈안심스테이크",
+  ],
+  [
+    "차조밥",
+    "두부김치찌개",
+    "닭갈비",
+    "멸치견과류볶음",
+    "콩나물무침",
+    "깍두기",
+    "콤비네이션피자",
+  ],
+  [
+    "낙지야채비빔밥",
+    "쪽파달걀국",
+    "모듬탕수&소스",
+    "배추김치",
+    "상하목장요구르트",
+  ],
+];
 function Dinner(props) {
   const [dinnerlist, setdinnerlist] = useState(null);
 
-  useEffect(() => {
-    if (!dinnerlist) GetDinnerList({ setdinnerlist: setdinnerlist });
-  }, [dinnerlist]);
-  console.log(dinnerlist);
-
   if (dinnerlist) {
-    let i = -1;
-    return (
-      <Table responsive>
-        <thead>
-          <tr style={{ textAlign: "center" }}>
-            <th></th>
-            <th>월</th>
-            <th>화</th>
-            <th>수</th>
-            <th>목</th>
-            <th>금</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dinnerlist.data.mealServiceDietInfo[1].row.slice(0, 3).map((m) => {
-            if (i !== -1) {
-              i = i + 5;
-            } else if (i === -1) {
-              i = 0;
-            }
-            console.log(i);
-
-            return (
-              <tr key={i} style={{ textAlign: "center" }}>
-                <th>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[i].MMEAL_SC_NM}
-                </th>
-                <td>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[i].DDISH_NM.split(
-                    "<br/>"
-                  )}
-                </td>
-                <td>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[
-                    i + 1
-                  ].DDISH_NM.split("<br/>")}
-                </td>
-                <td>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[
-                    i + 2
-                  ].DDISH_NM.split("<br/>")}
-                </td>
-                <td>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[
-                    i + 3
-                  ].DDISH_NM.split("<br/>")}
-                </td>
-                <td>
-                  {dinnerlist.data.mealServiceDietInfo[1].row[
-                    i + 4
-                  ].DDISH_NM.split("<br/>")}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-    );
+    return <div>hi</div>;
   } else {
     return <div>급식표 로딩중..</div>;
   }

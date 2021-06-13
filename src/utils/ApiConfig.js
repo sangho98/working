@@ -294,8 +294,8 @@ export const GetDinnerList = async (props) => {
       params: {
         KEY: "d42c851653dc4a008d9e831aaf3b8a31",
         Type: "json",
-        ATPT_OFCDC_SC_CODE: udata().educationCenter,
-        SD_SCHUL_CODE: udata().schoolnumber,
+        ATPT_OFCDC_SC_CODE: udata() && udata().educationCenter,
+        SD_SCHUL_CODE: udata() && udata().schoolnumber,
         pIndex: "1",
         pSize: "1000",
         MLSV_FROM_YMD: "20210607",
@@ -313,7 +313,6 @@ export const GetDinnerList = async (props) => {
 
 export const GetTimeList = (props) => {
   const { setschedule } = props;
-  console.log("GET TIMELIST");
   axios
     .get("/api/hub/hisTimetable", {
       params: {
@@ -321,10 +320,10 @@ export const GetTimeList = (props) => {
         Type: "json",
         AY: "2021", // 년도
         SEM: SEM, //학기
-        ATPT_OFCDC_SC_CODE: udata().educationCenter, // 교육청 코드
-        SD_SCHUL_CODE: udata().schoolnumber, // 학교 이름
-        GRADE: udata().grade, //학년
-        CLASS_NM: udata().classnum, //반
+        ATPT_OFCDC_SC_CODE: udata() && udata().educationCenter, // 교육청 코드
+        SD_SCHUL_CODE: udata() && udata().schoolnumber, // 학교 이름
+        GRADE: udata() && udata().grade, //학년
+        CLASS_NM: udata() && udata().classnum, //반
         pIndex: "1",
         pSize: "1000",
         TI_FROM_YMD: "20210607",
@@ -333,7 +332,6 @@ export const GetTimeList = (props) => {
     })
     .then((res) => {
       setschedule(res);
-      console.log(res);
     })
     .catch((err) => {
       console.log(err);

@@ -90,7 +90,14 @@ function Register(props) {
       <Row style={{ marginTop: "3rem" }} className="justify-content-md-center">
         <Col md="auto">
           <Link to="/">
-            <h1 style={{ marginBottom: "3rem" }}>HighSchool Time</h1>
+            <h1
+              style={{
+                marginBottom: "3rem",
+                color: "#03c7f5",
+              }}
+            >
+              HighSchool Time
+            </h1>
           </Link>
         </Col>
       </Row>
@@ -113,7 +120,11 @@ function Register(props) {
             </Col>
             <Col>
               <Button
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   PostCheckNickname({
                     nickname: nickname,
@@ -152,7 +163,11 @@ function Register(props) {
               <Button
                 type="button"
                 className="mb-2"
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   console.log(`send Email: ${emailFull}`);
                   PostCheckEmail({
@@ -221,7 +236,11 @@ function Register(props) {
             </Col>
             <Col md={4}>
               <Button
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   GetSchoolInfo({
                     setreg: setreg,
@@ -253,7 +272,11 @@ function Register(props) {
             </Col>
             <Col md={4}>
               <Button
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   GetSchoolInfo({
                     setreg: setreg,
@@ -299,7 +322,11 @@ function Register(props) {
             <Col>
               <Button
                 type="button"
-                style={{ width: "100%" }}
+                style={{
+                  width: "100%",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   props.history.goBack();
                 }}
@@ -313,7 +340,12 @@ function Register(props) {
             <Col>
               <Button
                 type="button"
-                style={{ width: "100%", marginTop: "0.3rem" }}
+                style={{
+                  width: "100%",
+                  marginTop: "0.3rem",
+                  backgroundColor: "#03c7f5",
+                  border: "none",
+                }}
                 onClick={() => {
                   if (duplicateNick || duplicateEmail) {
                     // 회원가입 막기
